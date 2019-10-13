@@ -1,15 +1,21 @@
 import React from 'react';
-import { Container, Content } from 'native-base';
+import { Container, Content, Footer } from 'native-base';
 import styles from './ApplicationStyles';
 
-export default function Layout({withPadding = true, children}) {
+export default function Layout({centeredContent = true, footer, children}) {
     let style = styles.flexColumn;
-    if (withPadding) {
-        style = {...style, padding: 20}
+
+    if (centeredContent) {
+        style = {...style, justifyContent: 'center'}
+    } else {
+        style = {...style, justifyContent: 'flex-start'}
     }
     return <Container>
         <Content contentContainerStyle={style}>
             {children}
         </Content>
+        {
+            footer && <Footer>{footer}</Footer>
+        }
     </Container>;
 }

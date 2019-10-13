@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import {CameraRoll, StyleSheet, Text, View} from 'react-native'
 
-import Camera, {
-    Aspect,
-    CaptureQuality,
-    TorchMode,
-} from 'react-native-openalpr'
+import RNTextDetector from "react-native-text-detector";
+import ExpoCamera from "./ExpoCamera";
+
 
 const styles = StyleSheet.create({
     container: {
@@ -27,29 +25,26 @@ export default class LicensePlateScan extends React.Component {
         plate: 'Scan a plate',
     }
 
-    onPlateRecognized = ({ plate, confidence }) => {
-        this.setState({
-            plate,
-        })
-    }
+    detectText = async (uri) => {
+        console.log(uri);
+        try {
+            const visionResp = await RNTextDetector.detectFromUri(uri);
+            console.log('visionResp', visionResp);
+        } catch (e) {
+            console.warn(e);
+        }
+    };
 
     render() {
         return (
             <View style={styles.container}>
-                <Camera
-                    style={styles.preview}
-                    aspect={Aspect.fill}
-                    captureQuality={CaptureQuality.medium}
-                    country="us"
-                    onPlateRecognized={this.onPlateRecognized}
-                    plateOutlineColor="#ff0000"
-                    showPlateOutline
-                    torchMode={TorchMode.off}
-                    touchToFocus
-                />
-                <View style={styles.textContainer}>
-                    <Text style={styles.text}>{this.state.plate}</Text>
-                </View>
+                <ExpoCamera onPhoto={() => {
+                    CameraRoll.getPhotos({first: 1}).then(data => {
+                            const asset = data.edges[0];
+                            this.detectText(asset.node.image.uri).then(text => console.log(text));
+                        }
+                    );
+                }} style={StyleSheet.absoluteFillObject}/>
             </View>
         )
     }

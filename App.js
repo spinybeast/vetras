@@ -5,8 +5,10 @@ import ReceiverScreen from './Screens/ReceiverScreen/ReceiverScreen';
 import TechnicianScreen from './Screens/TechnicianScreen/TechnicianScreen';
 import BarCodeScanScreen from './Screens/BarCodeScanScreen/BarCodeScanScreen';
 import CarInfoScreen from './Screens/CarInfoScreen/CarInfoScreen';
+import AddDamageScreen from './Screens/CarInfoScreen/AddDamageScreen';
 import DamageScreen from './Screens/CarInfoScreen/DamageScreen';
 import ServicesScreen from './Screens/CarInfoScreen/ServicesScreen';
+import SubmitReceiverInfoScreen from './Screens/SubmitReceiverInfoScreen/SubmitReceiverInfoScreen';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
@@ -36,7 +38,9 @@ export default function App() {
           BarCodeScanScreen,
           CarInfoScreen,
           DamageScreen,
-          ServicesScreen
-      }} initialStack='AuthScreen' />
+          AddDamageScreen,
+          ServicesScreen,
+          SubmitReceiverInfoScreen
+      }} initialStack='AddDamageScreen' />
   );
 }

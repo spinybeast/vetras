@@ -2,11 +2,11 @@ export default {
     flexColumn: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'center'
+        padding: 20
     },
     flexRow: {
-        flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignSelf: 'center'
     },
     half: {
         width: '50%'

@@ -10,11 +10,12 @@ export default function CarInfoScreen({navigator, VIN}) {
     const [carInfo, setCarInfo] = useState({});
     const [loading, setLoading] = useState(false);
     const [fuel, setFuel] = useState(1);
-    const {register, setValue, handleSubmit} = useForm();
-    const onSubmit = data => navigator.push('DamageScreen', {carInfo: {...data, fuel}});
+    const {register, setValue, handleSubmit, formState, getValues} = useForm();
+    const onSubmit = data => navigator.push('DamageScreen', {carInfo: {...data, fuel, VIN}});
 
     useEffect(() => {
         setLoading(true);
+        setTimeout(() => setLoading(false), 5000);
         decodeVIN(VIN).then(info => {
             info = info || {};
             setCarInfo(info);
@@ -25,6 +26,13 @@ export default function CarInfoScreen({navigator, VIN}) {
         }).catch(e => setLoading(false));
     }, []);
 
+    const isValid = () => {
+        if (!formState.dirty) {
+            return false;
+        }
+        const values = getValues();
+        return !values.make || !values.model;
+    };
     return <Layout>
         <Text style={styles.header}>VIN: {VIN}</Text>
         <View>
@@ -34,7 +42,7 @@ export default function CarInfoScreen({navigator, VIN}) {
                     <Form>
                         <Item floatingLabel>
                             <Label>Manufacturer</Label>
-                            <Input ref={register({name: 'manufacturer'})}
+                            <Input ref={register({name: 'manufacturer'}, {required: true})}
                                    onChangeText={text => setValue('manufacturer', text)}
                                    value={carInfo.manuName}/>
                         </Item>
@@ -74,7 +82,7 @@ export default function CarInfoScreen({navigator, VIN}) {
                                 />
                             </View>
                         </Item>
-                        <Button block onPress={handleSubmit(onSubmit)}>
+                        <Button disabled={!isValid()} block onPress={handleSubmit(onSubmit)}>
                             <Text>Submit</Text>
                         </Button>
                     </Form>
