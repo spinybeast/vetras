@@ -1,8 +1,10 @@
 export const imageSource = require('../assets/damage-areas.jpg');
 export const GLASS_IDS = ['9', '22'];
+
 export function isGlass(id) {
     return GLASS_IDS.indexOf(id) !== -1;
 }
+
 export const MAPPING = [
     {
         id: "1",

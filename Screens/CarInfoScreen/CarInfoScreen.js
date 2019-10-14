@@ -62,7 +62,7 @@ export default function CarInfoScreen({navigator, VIN}) {
                             <Label>Licence plate</Label>
                                 <Input ref={register({name: 'licencePlate'})}
                                        onChangeText={text => setValue('licencePlate', text)}/>
-                                <Icon active name='camera'/>
+                                {/*<Icon active name='camera'/>*/}
                         </Item>
                         <Item floatingLabel>
                             <Label>Mileage (km)</Label>

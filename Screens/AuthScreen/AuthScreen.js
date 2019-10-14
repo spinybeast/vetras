@@ -1,12 +1,53 @@
-import React from 'react';
-import { Button, Text } from 'native-base';
+import React, {useState} from 'react';
+import { Button, Form, Input, Item, Label, Text } from 'native-base';
+import useForm from 'react-hook-form'
 import styles from './AuthScreenStyle';
 import Layout from '../../Theme/Layout';
+import {Image, Dimensions, Keyboard} from "react-native";
+import {login} from '../../Helpers/api';
+
+const logo = require('../../assets/logo.png');
+const { width } = Dimensions.get('window');
 
 export default function ReceiverScreen({navigator}) {
+    const {register, setValue, handleSubmit, getValues} = useForm();
+    const [error, setError] = useState(null);
+    const onSubmit = data => {
+        Keyboard.dismiss();
+        setError(null);
+        login(data).then(success => {
+            if (success) {
+                navigator.push('ReceiverScreen');
+            } else {
+                setError('Incorrect login or password')
+            }
+        });
+
+    };
+    const isValid = () => {
+        const values = getValues();
+        return values.login && values.password;
+    };
     return <Layout>
-        <Text style={[styles.margin, styles.label]}>Who are you?</Text>
-        <Button style={styles.margin} block onPress={() => navigator.push('ReceiverScreen')}><Text> Receiver </Text></Button>
-        <Button block onPress={() => navigator.push('TechnicianScreen')}><Text> Technician </Text></Button>
+        <Image source={logo} style={{marginBottom: 40, width: width - 40}} resizeMode="contain"/>
+        <Text style={styles.header}>Login</Text>
+        {error && <Text style={styles.error}>{error}</Text>}
+        <Form>
+            <Item floatingLabel>
+                <Label>Login</Label>
+                <Input ref={register({name: 'login'}, {required: true})}
+                       onChangeText={text => setValue('login', text)}
+                       />
+            </Item>
+            <Item floatingLabel style={styles.margin}>
+                <Label>Password</Label>
+                <Input secureTextEntry ref={register({name: 'password'}, {required: true})}
+                       onChangeText={text => setValue('password', text)}
+                />
+            </Item>
+            <Button disabled={!isValid()} block onPress={handleSubmit(onSubmit)}>
+                <Text>Submit</Text>
+            </Button>
+        </Form>
     </Layout>;
 }

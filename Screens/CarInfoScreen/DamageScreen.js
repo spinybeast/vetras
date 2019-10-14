@@ -1,48 +1,61 @@
 import React, { useState } from 'react';
-import { Text, View, Button, Icon, List, ListItem, Thumbnail, Left,Body, Footer, FooterTab } from 'native-base';
+import { Text, View, Button, Icon, List, ListItem, Thumbnail, Left, Body, Right, FooterTab } from 'native-base';
 import styles from './CarInfoScreenStyle';
 import Layout from '../../Theme/Layout';
 
 export default function DamageScreen({navigator, carInfo, damages = {}}) {
+    const [damagesCopy, setDamagesCopy] = useState({...damages});
+
     let footer = null;
-    if (Object.keys(damages).length > 0) {
+    if (Object.keys(damagesCopy).length > 0) {
         footer = <FooterTab>
-            <Button full onPress={() => navigator.push('ServicesScreen', {carInfo, damages})}>
+            <Button full onPress={() => navigator.push('ServicesScreen', {carInfo, damages: damagesCopy})}>
                 <Text>Submit</Text>
             </Button>
         </FooterTab>
     }
+
+    const deleteDamage = (key) => {
+        delete damagesCopy[key];
+        setDamagesCopy({...damagesCopy});
+    };
+
     return <Layout centeredContent={false} footer={footer}>
         <View style={[styles.flexRow, {marginTop: 20}]}>
-            <Text style={[styles.header, {lineHeight:20}]}>Add damages</Text>
-            <Button style={styles.iconButton} onPress={() => navigator.push('AddDamageScreen', {carInfo, damages})} >
+            <Text style={[styles.header, {lineHeight: 20}]}>Add damages</Text>
+            <Button style={styles.iconButton}
+                    onPress={() => navigator.push('AddDamageScreen', {carInfo, damages: damagesCopy})}>
                 <Icon name="add"/>
             </Button>
         </View>
         <List>
-            {Object.keys(damages).map(key =>
-                <ListItem thumbnail key={key} onPress={() => navigator.push('AddDamageScreen', {carInfo, damages, currentDamage: key})}>
-                    <Left>
-                        <Thumbnail square source={{ uri: damages[key].photo }} />
-                    </Left>
-                    <Body>
-                        <Text>Area {key}</Text>
-                        {
-                            Object.keys(damages[key]).map(damage => {
-                                    if (damage !== 'photo') {
-                                        return <Text key={damage} note numberOfLines={1}>
-                                            {damage}: {damages[key][damage]}
-                                        </Text>
-                                    }
-                                    return null;
-                                }
-                            )
-                        }
-                    </Body>
-                </ListItem>
-            )}
+            {
+                Object.keys(damagesCopy).map(key => {
+                    const damage = damagesCopy[key];
 
+                    return <ListItem thumbnail key={key} onPress={() => navigator.push('AddDamageScreen', {
+                        carInfo,
+                        damages: damagesCopy,
+                        currentDamageKey: key
+                    })}>
+                        <Left>
+                            <Thumbnail square source={{uri: damage.photo}}/>
+                        </Left>
+                        <Body>
+                            <Text>Area {damage.area}</Text>
+                            {
+                                <Text key={damage.type} note numberOfLines={1}>
+                                    {damage.type}: {damage.value}
+                                </Text>
+                            }
+                        </Body>
+                        <Right>
+                            <Button transparent style={styles.iconButton} onPress={() => deleteDamage(key)}>
+                                <Icon name="close"/>
+                            </Button>
+                        </Right>
+                    </ListItem>
+                })}
         </List>
     </Layout>
-
 }

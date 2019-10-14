@@ -11,7 +11,7 @@ export default function Layout({centeredContent = true, footer, children}) {
         style = {...style, justifyContent: 'flex-start'}
     }
     return <Container>
-        <Content contentContainerStyle={style}>
+        <Content enableOnAndroid contentContainerStyle={style}>
             {children}
         </Content>
         {

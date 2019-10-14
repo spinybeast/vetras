@@ -6,10 +6,15 @@ export default StyleSheet.create({
         ...AppStyles.flexColumn,
         backgroundColor: 'white',
     },
-    label: {
-        ...AppStyles.textCenter
+    header: {
+        ...AppStyles.textCenter,
+        fontSize: 20
     },
     margin: {
         marginBottom: 20,
+    },
+    error: {
+        textAlign: 'center',
+        color: '#c82829'
     }
 });

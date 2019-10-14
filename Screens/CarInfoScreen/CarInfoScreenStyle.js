@@ -1,6 +1,10 @@
 import {StyleSheet} from 'react-native';
 import AppStyles from '../../Theme/ApplicationStyles';
-
+const button = {
+    marginLeft: 5,
+    marginRight: 5,
+    marginBottom: 10,
+};
 export default StyleSheet.create({
     ...AppStyles,
     main: {
@@ -19,11 +23,11 @@ export default StyleSheet.create({
         color: '#CCCCCC'
     },
     margin: {
-        marginBottom: 15
+        marginBottom: 10
     },
     image: {
         alignSelf: 'center',
-        paddingTop: 40,
+        justifyContent: 'flex-start',
         zIndex: 0
     },
     slider: {
@@ -37,18 +41,22 @@ export default StyleSheet.create({
     transparent: {
         backgroundColor: 'transparent'
     },
-    grey: {
-        backgroundColor: '#cccccc'
-    },
     iconButton: {
         width: 50,
         height: 50,
         marginLeft: 20
     },
+    button: {
+        ...button
+    },
     damagePhoto: {
-        width: 100,
-        height: 100,
+        width: 75,
+        height: 75,
         alignSelf: 'center',
         marginBottom: 10
+    },
+    photo: {
+        ...AppStyles.flexRow,
+        marginTop: 10
     }
 });

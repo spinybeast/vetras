@@ -41,6 +41,6 @@ export default function App() {
           AddDamageScreen,
           ServicesScreen,
           SubmitReceiverInfoScreen
-      }} initialStack='AddDamageScreen' />
+      }} initialStack='AuthScreen' />
   );
 }

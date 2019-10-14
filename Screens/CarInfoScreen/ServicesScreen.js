@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, Text, Switch, Form, Button, Icon, ListItem, Left, Body, Right, FooterTab} from 'native-base';
-import {StyleSheet, CameraRoll, Image} from 'react-native';
+import {StyleSheet, Image} from 'react-native';
 import styles from './CarInfoScreenStyle';
 import ExpoCamera from '../../Components/ExpoCamera';
 import Layout from '../../Theme/Layout';
@@ -16,13 +16,9 @@ export default function ServicesScreen({navigator, carInfo, damages}) {
         </FooterTab>;
 
     if (showCamera) {
-        return <ExpoCamera onPhoto={() => {
+        return <ExpoCamera onPhoto={(photo) => {
             setShowCamera(false);
-            CameraRoll.getPhotos({first: 1}).then(data => {
-                    const asset = data.edges[0];
-                    setPhotos([...photos, asset.node.image]);
-                }
-            );
+            setPhotos([...photos, photo.uri]);
         }} style={StyleSheet.absoluteFillObject}/>
     }
     return <Layout footer={footer}>
@@ -80,8 +76,8 @@ export default function ServicesScreen({navigator, carInfo, damages}) {
                 </ListItem>
             </Form>
             <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-                {photos.map((image, key) => <Image key={key} style={{width: 100, height: 100, flexBasis: '25%'}}
-                                                   source={{uri: image.uri}}/>)}
+                {photos.map((image, key) => <Image key={key} style={{width: 75, height: 75, margin: 10, flexBasis: '25%'}}
+                                                   source={{uri: image}}/>)}
             </View>
         </View>
     </Layout>;
