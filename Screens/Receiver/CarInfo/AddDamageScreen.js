@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Button, Form, Picker, Item, Label } from 'native-base';
 import ImageMapper from 'react-native-image-mapper';
-import { imageSource, MAPPING, isGlass } from '../../Helpers/image';
+import { imageSource, MAPPING, isGlass } from '../../../Helpers/image';
 import styles from './CarInfoScreenStyle';
-import Layout from '../../Theme/Layout';
+import Layout from '../../../Theme/Layout';
 import { Image, StyleSheet, ScrollView } from "react-native";
-import ExpoCamera from "../../Components/ExpoCamera";
+import ExpoCamera from "../../../Components/ExpoCamera";
 
-export default function AddDamageScreen({navigator, carInfo, damages = {}, currentDamageKey = null}) {
+export default function AddDamageScreen({navigator, carInfo, startTime, damages = {}, currentDamageKey = null}) {
     const [damagesCopy, setDamagesCopy] = useState({...damages});
     const [selectedArea, setSelectedArea] = useState(null);
     const [currentDamage, setCurrentDamage] = useState({});
@@ -48,7 +48,7 @@ export default function AddDamageScreen({navigator, carInfo, damages = {}, curre
     };
 
     const onSubmit = () => {
-        navigator.push('DamageScreen', {carInfo, damages: damagesCopy})
+        navigator.push('DamageScreen', {carInfo, startTime, damages: damagesCopy})
     };
 
     const currentDamageIs = (type) => {

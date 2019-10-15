@@ -15,9 +15,9 @@ export default function ReceiverScreen({navigator}) {
     const onSubmit = data => {
         Keyboard.dismiss();
         setError(null);
-        login(data).then(success => {
-            if (success) {
-                navigator.push('BarCodeScanScreen');
+        login(data).then(result => {
+            if (result.success) {
+                navigator.push(result.role === 'receiver' ? 'BarCodeScanScreen': 'SelectServicesScreen');
             } else {
                 setError('Incorrect login or password')
             }

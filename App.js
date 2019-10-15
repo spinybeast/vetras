@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import Navigator from 'react-native-easy-router';
 import AuthScreen from './Screens/AuthScreen/AuthScreen';
-import TechnicianScreen from './Screens/TechnicianScreen/TechnicianScreen';
-import BarCodeScanScreen from './Screens/BarCodeScanScreen/BarCodeScanScreen';
-import CarInfoScreen from './Screens/CarInfoScreen/CarInfoScreen';
-import AddDamageScreen from './Screens/CarInfoScreen/AddDamageScreen';
-import DamageScreen from './Screens/CarInfoScreen/DamageScreen';
-import ServicesScreen from './Screens/CarInfoScreen/ServicesScreen';
-import SubmitReceiverInfoScreen from './Screens/SubmitReceiverInfoScreen/SubmitReceiverInfoScreen';
+import SelectServicesScreen from './Screens/Technician/SelectServicesScreen/SelectServicesScreen';
+import OrdersScreen from './Screens/Technician/OrdersScreen/OrdersScreen';
+import JobScreen from './Screens/Technician/JobScreen/JobScreen';
+import BarCodeScanScreen from './Screens/Receiver/BarCodeScanScreen/BarCodeScanScreen';
+import CarInfoScreen from './Screens/Receiver/CarInfo/CarInfoScreen';
+import AddDamageScreen from './Screens/Receiver/CarInfo/AddDamageScreen';
+import DamageScreen from './Screens/Receiver/CarInfo/DamageScreen';
+import ServicesScreen from './Screens/Receiver/CarInfo/ServicesScreen';
+import SubmitReceiverInfoScreen from './Screens/Receiver/SubmitReceiverInfoScreen/SubmitReceiverInfoScreen';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
@@ -32,7 +34,9 @@ export default function App() {
   return (
       <Navigator screens={{
           AuthScreen,
-          TechnicianScreen,
+          SelectServicesScreen,
+          OrdersScreen,
+          JobScreen,
           BarCodeScanScreen,
           CarInfoScreen,
           DamageScreen,

@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Spinner, Form, Item, Input, Label, Text, Button, View, Icon } from 'native-base';
+import {Spinner, Form, Item, Input, Label, Text, Button, View, Icon, Picker} from 'native-base';
 import useForm from 'react-hook-form'
 import styles from './CarInfoScreenStyle';
-import { decodeVIN, search } from '../../Helpers/api';
+import {decodeVIN, getPrincipals, searchAll} from '../../../Helpers/api';
 import Slider from 'react-native-slider';
-import Layout from '../../Theme/Layout';
+import Layout from '../../../Theme/Layout';
 import { Keyboard } from 'react-native';
 
-export default function CarInfoScreen({navigator, VIN = 'TSMLYE21S00511109'}) {
+export default function CarInfoScreen({navigator, VIN, startTime}) {
     const [carInfo, setCarInfo] = useState({});
     const [loading, setLoading] = useState(false);
     const [fuel, setFuel] = useState(1);
+    const [principals, setPrincipals] = useState([]);
     const {register, setValue, handleSubmit, formState, getValues} = useForm();
     const onSubmit = data => {
         Keyboard.dismiss();
-        navigator.push('DamageScreen', {carInfo: {...data, fuel, VIN}});
+        navigator.push('DamageScreen', {carInfo: {...data, fuel, VIN}, startTime});
     };
 
     useEffect(() => {
-        search();
         setLoading(true);
         setTimeout(() => setLoading(false), 5000);
         decodeVIN(VIN).then(info => {
@@ -29,6 +29,7 @@ export default function CarInfoScreen({navigator, VIN = 'TSMLYE21S00511109'}) {
             setValue('type', info.typeName);
             setLoading(false);
         }).catch(e => setLoading(false));
+        getPrincipals().then(principals => setPrincipals(principals))
     }, []);
 
     const isValid = () => {
@@ -74,6 +75,18 @@ export default function CarInfoScreen({navigator, VIN = 'TSMLYE21S00511109'}) {
                             <Input ref={register({name: 'mileage'})}
                                    onChangeText={text => setValue('mileage', text)}
                                    keyboardType="numeric"/>
+                        </Item>
+                        <Item picker style={{marginLeft: 15, marginTop: 20}}>
+                            <Label>Principal</Label>
+                            <Picker
+                                mode="dropdown"
+                                selectedValue={carInfo.principal}
+                                onValueChange={principal => setCarInfo({...carInfo, principal})}>
+                                {
+                                    principals.map((principal, key) =>
+                                        <Picker.Item key={key} label={principal.name} value={principal.name}/>)
+                                }
+                            </Picker>
                         </Item>
                         <Item last>
                             <Label>Fuel ({fuel})</Label>

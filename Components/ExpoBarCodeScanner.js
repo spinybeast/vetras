@@ -4,7 +4,7 @@ import { View, Button, Icon, Text, Spinner } from 'native-base';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import styles from '../Screens/BarCodeScanScreen/BarCodeScanScreenStyle';
+import styles from '../Screens/Receiver/BarCodeScanScreen/BarCodeScanScreenStyle';
 
 export default class ExpoBarCodeScanner extends React.Component {
     state = {

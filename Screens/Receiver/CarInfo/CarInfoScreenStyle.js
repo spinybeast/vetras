@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import AppStyles from '../../Theme/ApplicationStyles';
+import AppStyles from '../../../Theme/ApplicationStyles';
 const button = {
     marginLeft: 5,
     marginRight: 5,

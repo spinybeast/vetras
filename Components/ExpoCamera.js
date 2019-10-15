@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Button, Icon, Text } from 'native-base';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
-import styles from "../Screens/BarCodeScanScreen/BarCodeScanScreenStyle";
+import styles from "../Screens/Receiver/BarCodeScanScreen/BarCodeScanScreenStyle";
 
 export default class ExpoCamera extends React.Component {
     state = {

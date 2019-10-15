@@ -1,17 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import { Button, Text, Spinner, View } from 'native-base';
 import styles from './SubmitReceiverInfoScreenStyle';
-import Layout from '../../Theme/Layout';
-import { saveReceiverInfo } from '../../Helpers/api';
+import Layout from '../../../Theme/Layout';
+import { saveReceiverInfo } from '../../../Helpers/api';
 
-export default function SubmitReceiverInfoScreen({navigator, carInfo, damages, services, photos}) {
+export default function SubmitReceiverInfoScreen({navigator, carInfo, damages, photos, startTime}) {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     useEffect(() => {
         setLoading(true);
-        saveReceiverInfo(carInfo, damages, services, photos).then(() => {
+        saveReceiverInfo(carInfo, damages, photos, startTime).then(() => {
             setLoading(false);
             setSuccess(true);
+            setTimeout(navigator.push('BarCodeScanScreen'), 1000);
         }).catch(() => {
             setLoading(false);
         });
@@ -20,8 +21,8 @@ export default function SubmitReceiverInfoScreen({navigator, carInfo, damages, s
     return <Layout>
         {
             loading ? <Spinner/> :
-                <View>
-                    <Text>{success ? 'Data saved' : 'Error'}</Text>
+                <View style={styles.flexRow}>
+                    <Text>{success ? 'Acceptance Complete.' : 'Error'}</Text>
                 </View>
         }
     </Layout>

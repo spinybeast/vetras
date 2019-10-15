@@ -1,115 +1,104 @@
-import { uploadImage } from './minio';
-import Appbase from 'appbase-js';
+import {insert, search, searchAll} from "./elastic";
 
 export const API_URL = 'https://partsapi.ru/api.php';
-export const ELASTIC_URL = 'http://vetra.checkmobile.com:9200';
 
 export async function login({login, password}) {
-    const [correctLogin, correctPassword] = ['1', '1'];
-    return await new Promise((resolve, reject) => {
-        if (login === correctLogin && password === correctPassword) {
-            setTimeout(() => resolve(true), 500)
-        } else {
-            setTimeout(() => resolve(false), 500)
+    const users = [
+        {
+            role: 'receiver',
+            login: '1',
+            password: '1'
+        },
+        {
+            role: 'technician',
+            login: '2',
+            password: '2'
         }
+    ];
+    return await new Promise((resolve, reject) => {
+        let result = {success: false};
+        users.map(user => {
+            if (login === user.login && password === user.password) {
+                result = {success: true, role: user.role};
+            }
+        });
+        setTimeout(() => resolve(result), 500)
     });
 }
 
 export function decodeVIN(VIN) {
-    return fetch(API_URL + '?act=VINdecode&vin='+VIN+'&lang=en&key=test')
+    return fetch(API_URL + '?act=VINdecode&vin=' + VIN + '&lang=en&key=test')
         .then(res => res.json())
         .then(res => res.vehicleDetails)
 }
-export function search() {
-    const client = Appbase({
-        url: ELASTIC_URL,
-        app: 'labour_tracking'
-    });
-    client
-        .search({
-            body: {
-                query: {
-                    match_all: {},
-                },
-            },
-        })
-        .then(function(res) {
-            console.log('query result: ', res);
-        })
-        .catch(function(err) {
-            console.log('search error: ', err);
-        });
-}
-async function saveVehicle(carInfo, damages, services, photos) {
-    const client = Appbase({
-        url: ELASTIC_URL,
-        app: 'vehicles'
-    });
 
+export function getPrincipals() {
+    return searchAll('principals', 'principal');
+}
+
+export function getServices() {
+    return searchAll('services', 'service');
+}
+
+export function getOrders(selectedServices) {
+    const query = {
+        match_all: {}
+    };
+    return search('orders', null, query);
+}
+
+export function getVehicles(ids) {
+    const query = {
+       ids : {
+           values: ids
+       }
+    };
+    return search('vehicles', null, query);
+}
+
+async function saveVehicle(carInfo, damages, services, photos) {
     const body = {
         ...carInfo,
         damages: Object.keys(damages).map(key => ({
+            part: damages[key].area,
             type: damages[key].type,
             degree: damages[key].value,
             photos: damages[key].photo ? [damages[key].photo] : []
         })),
-        servicesOrdered: services,
         photos: photos,
         createdAt: new Date(),
         updatedAt: new Date(),
-        status: "new"
+        status: carInfo.servicesOrdered.length > 0 ? 'In Service' : 'Ready'
     };
 
-    return client.index({type: "_doc", body})
-        .then(res => res._id)
-        .catch(err => {
-            console.log(body, err);
-        });
+    return insert('vehicles', body);
 }
 
-async function saveOrder(vehicleId) {
-    const client = Appbase({
-        url: ELASTIC_URL,
-        app: 'orders'
-    });
-
+async function saveOrder(vehicleId, carInfo, startTime) {
     const body = {
         vehicleRecord: vehicleId,
-        serviceType: '',
-        createdAt: new Date(),
+        serviceType: carInfo.servicesOrdered,
+        createdAt: startTime,
         serviceSubtypesActual: [],
         completedAt: new Date()
     };
 
-    return client.index({type: "_doc", body})
-        .then(res => res._id)
-        .catch(err => {
-            console.log(body, err);
-        });
+    return insert('orders', body);
 }
 
-async function saveLabour(orderId) {
-    const client = Appbase({
-        url: ELASTIC_URL,
-        app: 'labour_tracking'
-    });
-
+async function saveLabour(orderId, startTime) {
     const body = {
         order: orderId,
         employee: '1',
-        startedAt: new Date(),
-        duration:  20
+        startedAt: startTime,
+        duration: (new Date() - startTime) / 1000
     };
 
-    return client.index({type: "_doc", body})
-        .then(res => res._id)
-        .catch(err => {
-            console.log(body, err);
-        });
+    return insert('labour_tracking', body);
 }
 
-export async function saveReceiverInfo(carInfo, damages, services, photos) {
-    const vehicleId = await saveVehicle(carInfo, damages, services, photos);
-    const orderId = await saveOrder(vehicleId);
-    return saveLabour(orderId);
+export async function saveReceiverInfo(carInfo, damages, photos, startTime) {
+    const vehicleId = await saveVehicle(carInfo, damages, photos);
+    const orderId = await saveOrder(vehicleId, carInfo, startTime);
+    return saveLabour(orderId, startTime);
 }

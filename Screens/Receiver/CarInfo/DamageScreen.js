@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Text, View, Button, Icon, List, ListItem, Thumbnail, Left, Body, Right, FooterTab } from 'native-base';
 import styles from './CarInfoScreenStyle';
-import Layout from '../../Theme/Layout';
+import Layout from '../../../Theme/Layout';
 
-export default function DamageScreen({navigator, carInfo, damages = {}}) {
+export default function DamageScreen({navigator, carInfo, damages = {}, startTime}) {
     const [damagesCopy, setDamagesCopy] = useState({...damages});
 
     let footer = null;
     if (Object.keys(damagesCopy).length > 0) {
         footer = <FooterTab>
-            <Button full onPress={() => navigator.push('ServicesScreen', {carInfo, damages: damagesCopy})}>
+            <Button full onPress={() => navigator.push('ServicesScreen', {carInfo, startTime, damages: damagesCopy})}>
                 <Text>Submit</Text>
             </Button>
         </FooterTab>
@@ -24,7 +24,7 @@ export default function DamageScreen({navigator, carInfo, damages = {}}) {
         <View style={[styles.flexRow, {marginTop: 20}]}>
             <Text style={[styles.header, {lineHeight: 20}]}>Add damages</Text>
             <Button style={styles.iconButton}
-                    onPress={() => navigator.push('AddDamageScreen', {carInfo, damages: damagesCopy})}>
+                    onPress={() => navigator.push('AddDamageScreen', {carInfo, startTime, damages: damagesCopy})}>
                 <Icon name="add"/>
             </Button>
         </View>

@@ -1,22 +1,28 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, Item, Input, Label, Button, Text, Icon} from 'native-base';
 import styles from './BarCodeScanScreenStyle';
-import ExpoBarCodeScanner from '../../Components/ExpoBarCodeScanner';
+import ExpoBarCodeScanner from '../../../Components/ExpoBarCodeScanner';
 import useForm from 'react-hook-form';
-import Layout from '../../Theme/Layout';
+import Layout from '../../../Theme/Layout';
 import {Keyboard} from "react-native";
 
 export default function BarCodeScanScreen({navigator}) {
+    const [startTime, setStartTime] = useState(false);
     const [showScanner, setShowScanner] = useState(false);
     const {register, setValue, handleSubmit, getValues} = useForm();
+
+    useEffect(() => setStartTime(new Date()), []);
+
     const onSubmit = data => {
         Keyboard.dismiss();
-        navigator.push('CarInfoScreen', {VIN: data.VIN});
+        navigator.push('CarInfoScreen', {VIN: data.VIN, startTime});
     };
+
     const values = getValues();
     if (showScanner) {
         return <ExpoBarCodeScanner navigator={navigator}/>
     }
+
     return <Layout>
         <Form>
             <Item floatingLabel style={styles.margin}>
