@@ -55,8 +55,11 @@ export default class ExpoCamera extends React.Component {
                             </Button>
                         </View>
                     </Camera>
-                    <Button iconLeft transparent style={styles.top} onPress={this.toggleFlash}>
-                        <Icon color={'black'} name={this.isFlash() ? 'flash' : 'flash-off'}/>
+                    <Button iconLeft transparent style={styles.topLeft} onPress={this.toggleFlash}>
+                        <Icon name={this.isFlash() ? 'flash' : 'flash-off'}/>
+                    </Button>
+                    <Button iconLeft transparent style={styles.topRight} onPress={this.props.onCloseCamera}>
+                        <Icon name="close"/>
                     </Button>
                 </View>
             );

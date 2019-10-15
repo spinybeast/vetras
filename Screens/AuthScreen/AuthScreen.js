@@ -17,7 +17,7 @@ export default function ReceiverScreen({navigator}) {
         setError(null);
         login(data).then(success => {
             if (success) {
-                navigator.push('ReceiverScreen');
+                navigator.push('BarCodeScanScreen');
             } else {
                 setError('Incorrect login or password')
             }

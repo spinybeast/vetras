@@ -8,7 +8,10 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@appbaseio/reactivesearch-native": "^0.12.0",
     "@expo/vector-icons": "latest",
+    "appbase-js": "^4.0.2-beta.8",
+    "aws-sdk": "^2.549.0",
     "expo": "^35.0.0",
     "expo-barcode-scanner": "~7.0.0",
     "expo-camera": "^7.0.0",
@@ -19,12 +22,10 @@
     "react-dom": "16.8.3",
     "react-hook-form": "^3.23.18",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
-    "react-native-camera": "^3.7.1",
     "react-native-easy-router": "^3.0.2",
     "react-native-image-mapper": "^0.1.11",
     "react-native-openalpr": "^2.0.1",
     "react-native-slider": "^0.11.0",
-    "react-native-text-detector": "0.0.6",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.11.7"
   },

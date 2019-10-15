@@ -56,7 +56,7 @@ export default function AddDamageScreen({navigator, carInfo, damages = {}, curre
     };
 
     if (showCamera) {
-        return <ExpoCamera onPhoto={(photo) => {
+        return <ExpoCamera onCloseCamera={() => setShowCamera(false)} onPhoto={(photo) => {
             setShowCamera(false);
             editDamage({photo: photo.uri});
         }} style={StyleSheet.absoluteFillObject}/>
@@ -81,12 +81,12 @@ export default function AddDamageScreen({navigator, carInfo, damages = {}, curre
                         !isGlass(selectedArea) &&
                         <View style={styles.flexRow}>
                             <Button light={!currentDamageIs('dent')} primary={currentDamageIs('dent')} style={styles.button}
-                                    onPress={() => editDamage({type: 'dent'})}>
+                                    onPress={() => editDamage({type: 'dent', value: null})}>
                                 <Text>Dent</Text>
                             </Button>
                             <Button light={!currentDamageIs('scratch')} primary={currentDamageIs('scratch')}
                                     style={styles.button}
-                                    onPress={() => editDamage({type: 'scratch'})}>
+                                    onPress={() => editDamage({type: 'scratch', value: null})}>
                                 <Text>Scratch</Text>
                             </Button>
                         </View>
@@ -149,7 +149,7 @@ export default function AddDamageScreen({navigator, carInfo, damages = {}, curre
                                     <Text>Add Photo</Text>
                                 </Button>
                         }
-                        <Button disabled={!currentDamage.type} block onPress={onSubmit}><Text>Submit</Text></Button>
+                        <Button disabled={!currentDamage.value} block onPress={onSubmit}><Text>Submit</Text></Button>
                     </Form>
                 </View>
                 }

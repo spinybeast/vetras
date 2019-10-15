@@ -2,26 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { Spinner, Form, Item, Input, Label, Text, Button, View, Icon } from 'native-base';
 import useForm from 'react-hook-form'
 import styles from './CarInfoScreenStyle';
-import { decodeVIN } from '../../Helpers/api';
+import { decodeVIN, search } from '../../Helpers/api';
 import Slider from 'react-native-slider';
 import Layout from '../../Theme/Layout';
+import { Keyboard } from 'react-native';
 
-export default function CarInfoScreen({navigator, VIN}) {
+export default function CarInfoScreen({navigator, VIN = 'TSMLYE21S00511109'}) {
     const [carInfo, setCarInfo] = useState({});
     const [loading, setLoading] = useState(false);
     const [fuel, setFuel] = useState(1);
     const {register, setValue, handleSubmit, formState, getValues} = useForm();
-    const onSubmit = data => navigator.push('DamageScreen', {carInfo: {...data, fuel, VIN}});
+    const onSubmit = data => {
+        Keyboard.dismiss();
+        navigator.push('DamageScreen', {carInfo: {...data, fuel, VIN}});
+    };
 
     useEffect(() => {
+        search();
         setLoading(true);
         setTimeout(() => setLoading(false), 5000);
         decodeVIN(VIN).then(info => {
             info = info || {};
             setCarInfo(info);
-            setValue('make', info.manuName);
+            setValue('manufacturer', info.manuName);
             setValue('model', info.modelName);
-            setValue('series', info.typeName);
+            setValue('type', info.typeName);
             setLoading(false);
         }).catch(e => setLoading(false));
     }, []);

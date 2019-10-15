@@ -16,11 +16,17 @@ export default StyleSheet.create({
         bottom: 0,
         ...AppStyles.flexRow
     },
-    top: {
+    topLeft: {
         position: 'absolute',
-        width: '100%',
+        width: 50,
         top: 50,
         left: 20
+    },
+    topRight: {
+        position: 'absolute',
+        width: 50,
+        top: 50,
+        right: 20
     },
     textInput: {
         ...AppStyles.textInput

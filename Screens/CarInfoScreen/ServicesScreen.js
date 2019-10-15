@@ -16,10 +16,11 @@ export default function ServicesScreen({navigator, carInfo, damages}) {
         </FooterTab>;
 
     if (showCamera) {
-        return <ExpoCamera onPhoto={(photo) => {
-            setShowCamera(false);
-            setPhotos([...photos, photo.uri]);
-        }} style={StyleSheet.absoluteFillObject}/>
+        return <ExpoCamera onCloseCamera={() => setShowCamera(false)}
+                           onPhoto={(photo) => {
+                               setShowCamera(false);
+                               setPhotos([...photos, photo.uri]);
+                           }} style={StyleSheet.absoluteFillObject}/>
     }
     return <Layout footer={footer}>
         <View>

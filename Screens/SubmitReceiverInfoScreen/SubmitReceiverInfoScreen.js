@@ -1,13 +1,28 @@
-import React from 'react';
-import { Button, Text } from 'native-base';
+import React, {useState, useEffect} from 'react';
+import { Button, Text, Spinner, View } from 'native-base';
 import styles from './SubmitReceiverInfoScreenStyle';
 import Layout from '../../Theme/Layout';
+import { saveReceiverInfo } from '../../Helpers/api';
 
 export default function SubmitReceiverInfoScreen({navigator, carInfo, damages, services, photos}) {
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    useEffect(() => {
+        setLoading(true);
+        saveReceiverInfo(carInfo, damages, services, photos).then(() => {
+            setLoading(false);
+            setSuccess(true);
+        }).catch(() => {
+            setLoading(false);
+        });
+    }, []);
+
     return <Layout>
-        <Text>carInfo: {JSON.stringify(carInfo, null, 4)}</Text>
-        <Text>damages: {JSON.stringify(damages, null, 4)}</Text>
-        <Text>services: {JSON.stringify(services, null, 4)}</Text>
-        <Text>photos: {JSON.stringify(photos, null, 4)}</Text>
+        {
+            loading ? <Spinner/> :
+                <View>
+                    <Text>{success ? 'Data saved' : 'Error'}</Text>
+                </View>
+        }
     </Layout>
 }

@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Navigator from 'react-native-easy-router';
 import AuthScreen from './Screens/AuthScreen/AuthScreen';
-import ReceiverScreen from './Screens/ReceiverScreen/ReceiverScreen';
 import TechnicianScreen from './Screens/TechnicianScreen/TechnicianScreen';
 import BarCodeScanScreen from './Screens/BarCodeScanScreen/BarCodeScanScreen';
 import CarInfoScreen from './Screens/CarInfoScreen/CarInfoScreen';
@@ -33,7 +32,6 @@ export default function App() {
   return (
       <Navigator screens={{
           AuthScreen,
-          ReceiverScreen,
           TechnicianScreen,
           BarCodeScanScreen,
           CarInfoScreen,
