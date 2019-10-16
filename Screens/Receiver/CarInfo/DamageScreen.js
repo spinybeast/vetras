@@ -6,14 +6,11 @@ import Layout from '../../../Theme/Layout';
 export default function DamageScreen({navigator, carInfo, damages = {}, startTime}) {
     const [damagesCopy, setDamagesCopy] = useState({...damages});
 
-    let footer = null;
-    if (Object.keys(damagesCopy).length > 0) {
-        footer = <FooterTab>
+    let footer = <FooterTab>
             <Button full onPress={() => navigator.push('ServicesScreen', {carInfo, startTime, damages: damagesCopy})}>
-                <Text>Submit</Text>
+                <Text>{Object.keys(damagesCopy).length > 0 ? 'Submit' : 'No damages'}</Text>
             </Button>
-        </FooterTab>
-    }
+        </FooterTab>;
 
     const deleteDamage = (key) => {
         delete damagesCopy[key];
