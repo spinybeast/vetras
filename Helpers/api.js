@@ -68,10 +68,11 @@ export function fetchVehicles(ids) {
 }
 
 async function saveVehicle(carInfo, damages, services, photos) {
+    damages.forEach(damage => delete damage.id);
     const body = {
         ...carInfo,
-        damages: Object.keys(damages).map(key => damages[key]),
-        photos: photos,
+        damages,
+        photos,
         createdAt: new Date(),
         updatedAt: new Date(),
         status: carInfo.servicesOrdered.length > 0 ? STATUS_IN_SERVICE : STATUS_READY

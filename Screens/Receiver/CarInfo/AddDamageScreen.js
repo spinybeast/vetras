@@ -7,15 +7,15 @@ import Layout from '../../../Theme/Layout';
 import { Image, StyleSheet, ScrollView } from "react-native";
 import ExpoCamera from "../../../Components/ExpoCamera";
 
-export default function AddDamageScreen({navigator, carInfo, startTime, damages = {}, currentDamageKey = null}) {
-    const [damagesCopy, setDamagesCopy] = useState({...damages});
+export default function AddDamageScreen({navigator, carInfo, startTime, damages = [], currentDamageKey = null}) {
+    const damagesCopy = [...damages];
     const [selectedArea, setSelectedArea] = useState(null);
     const [currentDamage, setCurrentDamage] = useState({});
     const [showCamera, setShowCamera] = useState(false);
 
     useEffect(() => {
         if (currentDamageKey !== null) {
-            const currentDamage = damages[currentDamageKey];
+            const currentDamage = damages.filter(damage => damage.id === currentDamageKey)[0];
             onSelectArea(currentDamage.part);
             setCurrentDamage(currentDamage);
         }
@@ -26,11 +26,7 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
     };
 
     function makeId(editedDamage) {
-        let type = 'scratch-or-dent';
-        if (editedDamage.type === 'glass') {
-            type = editedDamage.type
-        }
-        return `${selectedArea}-${type}`;
+        return `${selectedArea}-${editedDamage.type}-${(new Date().getTime())}`;
     }
 
     const editDamage = (fields) => {
@@ -39,7 +35,6 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
             ...fields,
             part: selectedArea
         };
-        setDamagesCopy({...damagesCopy, [makeId(editedDamage)]: editedDamage});
         setCurrentDamage(editedDamage);
     };
 
@@ -48,6 +43,11 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
     };
 
     const onSubmit = () => {
+        if (currentDamageKey) {
+            damagesCopy.splice(currentDamageKey, 1, currentDamage);
+        } else {
+            damagesCopy.push({...currentDamage, id: makeId(currentDamage)});
+        }
         navigator.push('DamageScreen', {carInfo, startTime, damages: damagesCopy})
     };
 

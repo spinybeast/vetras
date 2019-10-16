@@ -3,8 +3,8 @@ import { Text, View, Button, Icon, List, ListItem, Thumbnail, Left, Body, Right,
 import styles from './CarInfoScreenStyle';
 import Layout from '../../../Theme/Layout';
 
-export default function DamageScreen({navigator, carInfo, damages = {}, startTime}) {
-    const [damagesCopy, setDamagesCopy] = useState({...damages});
+export default function DamageScreen({navigator, carInfo, damages = [], startTime}) {
+    const [damagesCopy, setDamagesCopy] = useState([...damages]);
 
     let footer = <FooterTab>
             <Button full onPress={() => navigator.push('ServicesScreen', {carInfo, startTime, damages: damagesCopy})}>
@@ -13,8 +13,8 @@ export default function DamageScreen({navigator, carInfo, damages = {}, startTim
         </FooterTab>;
 
     const deleteDamage = (key) => {
-        delete damagesCopy[key];
-        setDamagesCopy({...damagesCopy});
+        damagesCopy.splice(key, 1);
+        setDamagesCopy([...damagesCopy]);
     };
 
     return <Layout centeredContent={false} footer={footer}>
@@ -27,25 +27,21 @@ export default function DamageScreen({navigator, carInfo, damages = {}, startTim
         </View>
         <List>
             {
-                Object.keys(damagesCopy).map(key => {
-                    const damage = damagesCopy[key];
-
+                damagesCopy.map((damage, key) => {
                     return <ListItem thumbnail key={key} onPress={() => navigator.push('AddDamageScreen', {
                         carInfo,
                         startTime,
                         damages: damagesCopy,
-                        currentDamageKey: key
+                        currentDamageKey: damage.id
                     })}>
                         <Left>
                             <Thumbnail square source={{uri: damage.photos && damage.photos.length ? damage.photos[0] : null}}/>
                         </Left>
                         <Body>
                             <Text>Area {damage.part}</Text>
-                            {
-                                <Text key={damage.type} note numberOfLines={1}>
-                                    {damage.type}: {damage.degree}
-                                </Text>
-                            }
+                            <Text note numberOfLines={1}>
+                                {damage.type}: {damage.degree}
+                            </Text>
                         </Body>
                         <Right>
                             <Button transparent style={styles.iconButton} onPress={() => deleteDamage(key)}>
