@@ -4,7 +4,7 @@ import {StyleSheet, Image} from 'react-native';
 import styles from './CarInfoScreenStyle';
 import ExpoCamera from '../../../Components/ExpoCamera';
 import Layout from '../../../Theme/Layout';
-import {getServices} from "../../../Helpers/api";
+import {fetchServices} from "../../../Helpers/api";
 
 export default function ServicesScreen({navigator, carInfo, damages, startTime}) {
     const [carInfoCopy, setCarInfoCopy] = useState({...carInfo});
@@ -18,7 +18,7 @@ export default function ServicesScreen({navigator, carInfo, damages, startTime})
         </FooterTab>;
 
     useEffect(() => {
-        getServices().then(services => setServices(services));
+        fetchServices().then(services => setServices(services));
     }, []);
 
     const getIconName = (service) => {

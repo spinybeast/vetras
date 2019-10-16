@@ -19,9 +19,8 @@ export default class ExpoBarCodeScanner extends React.Component {
         this.setState({hasCameraPermission: status === 'granted'});
     }
 
-    handleBarCodeScanned = ({type, data}) => {
+    handleBarCodeScanned = ({data}) => {
         this.setState({scanned: true, VIN: data});
-        alert(`Bar code ${data} has been scanned!`);
     };
 
     toggleFlash = () => {
@@ -50,22 +49,33 @@ export default class ExpoBarCodeScanner extends React.Component {
                             }}
                             onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}>
                     </Camera>
-                    <Button iconLeft transparent style={styles.top} onPress={this.toggleFlash}>
+                    <Button iconLeft transparent style={styles.topLeft} onPress={this.toggleFlash}>
                         <Icon color={'black'} name={this.isFlash() ? 'flash' : 'flash-off'}/>
+                    </Button>
+                    <Button iconLeft transparent style={styles.topRight} onPress={this.props.onCloseCamera}>
+                        <Icon name="close"/>
                     </Button>
                     {scanned && (
                         <View style={styles.bottom}>
-                            <View style={[styles.button, {width: '50%'}]}>
-                                <Button light onPress={() => this.setState({scanned: false, VIN: null})}>
-                                    <Icon name={'md-barcode'}/>
-                                    <Text>Scan Again</Text>
-                                </Button>
-                            </View>
-                            <View style={{width: '50%', borderLeftColor: '#000', borderLeftWidth: 2}}>
-                                <Button light onPress={() => this.props.navigator.push('CarInfoScreen', {VIN: this.state.VIN})}>
-                                    <Text>Go forward</Text>
-                                    <Icon name={'arrow-forward'}/>
-                                </Button>
+                            {
+                                this.state.VIN &&
+                                <View style={styles.flexRow}>
+                                    <Text style={[styles.label, styles.margin]}>VIN: {this.state.VIN}</Text>
+                                </View>
+                            }
+                            <View style={styles.flexRow}>
+                                <View style={[styles.button, styles.half]}>
+                                    <Button style={styles.buttonLeft} light onPress={() => this.setState({scanned: false, VIN: null})}>
+                                        <Icon name={'md-barcode'}/>
+                                        <Text>Scan Again</Text>
+                                    </Button>
+                                </View>
+                                <View style={[styles.button, styles.half]}>
+                                    <Button style={styles.buttonRight} light onPress={() => this.props.navigator.push('CarInfoScreen', {VIN: this.state.VIN})}>
+                                        <Text>Go forward</Text>
+                                        <Icon name={'arrow-forward'}/>
+                                    </Button>
+                                </View>
                             </View>
                         </View>
                     )}

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Text} from 'native-base';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import {getServices} from "../../../Helpers/api";
+import {fetchServices} from "../../../Helpers/api";
 import Layout from "../../../Theme/Layout";
 import styles from './SelectServicesScreenStyle';
 
@@ -9,16 +9,19 @@ export default function SelectServicesScreen({navigator}) {
     const [selectedServices, selectServices] = useState([]);
     const [services, setServices] = useState([]);
     useEffect(() => {
-        getServices().then(services => setServices(services));
+        fetchServices().then(services => setServices(services));
     }, []);
 
     const submit = () => {
-        navigator.push('OrdersScreen', {services: selectedServices})
+        const selected = selectedServices.map(item => {
+            return services.filter(service => service.type === item)[0];
+        });
+        navigator.push('OrdersScreen', {selectedServices: selected})
     };
 
     return <Layout>
         <SectionedMultiSelect
-            items={services.map((service, key) => ({id: key, name: service.type}))}
+            items={services.map(service => ({id: service.type, name: service.type}))}
             uniqueKey="id"
             selectText="Choose service types"
             onSelectedItemsChange={(items) => selectServices(items)}

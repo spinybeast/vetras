@@ -5,6 +5,7 @@ import styles from './AuthScreenStyle';
 import Layout from '../../Theme/Layout';
 import {Image, Dimensions, Keyboard} from "react-native";
 import {login} from '../../Helpers/api';
+import { ROLE_RECEIVER } from '../../constants';
 
 const logo = require('../../assets/logo.png');
 const { width } = Dimensions.get('window');
@@ -17,7 +18,7 @@ export default function ReceiverScreen({navigator}) {
         setError(null);
         login(data).then(result => {
             if (result.success) {
-                navigator.push(result.role === 'receiver' ? 'BarCodeScanScreen': 'SelectServicesScreen');
+                navigator.push(result.role === ROLE_RECEIVER ? 'BarCodeScanScreen': 'SelectServicesScreen');
             } else {
                 setError('Incorrect login or password')
             }

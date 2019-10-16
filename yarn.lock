@@ -4548,6 +4548,11 @@ react-native-openalpr@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-openalpr/-/react-native-openalpr-2.0.1.tgz#d9d21d987eed21c4a43622d0e12b3032a8c6fa4c"
   integrity sha512-vX5f/90eWr6fcMyPbSQ7frXFTD5mX9RyUmPClP3K1nPhq9heA6A08N+p2hCfCaa9EiruwlAjm1mZBq2vrOgAGQ==
 
+react-native-sectioned-multi-select@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/react-native-sectioned-multi-select/-/react-native-sectioned-multi-select-0.7.2.tgz#f0e416b98d00c7af69aedca41f6a6c06800f51b6"
+  integrity sha512-7l2QUI/HVxfaBddP7VCX7cMLZV+4Wf2F4Gytar279vLEiMBBeyQsN8f/FaUXBR0qK3aQRqr3KFjAG1l/jLJIMw==
+
 react-native-slider@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-native-slider/-/react-native-slider-0.11.0.tgz#b68a0bc43c8422b24cd57947cc5ac2bcdb58fadc"

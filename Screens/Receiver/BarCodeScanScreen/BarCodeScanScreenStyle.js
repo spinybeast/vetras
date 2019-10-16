@@ -2,10 +2,7 @@ import { StyleSheet } from 'react-native';
 import AppStyles from '../../../Theme/ApplicationStyles';
 
 export default StyleSheet.create({
-    main: {
-        ...AppStyles.flexColumn,
-        backgroundColor: 'white',
-    },
+    ...AppStyles,
     scanner: {
         width: '100%',
         height: '100%'
@@ -13,8 +10,7 @@ export default StyleSheet.create({
     bottom: {
         position: 'absolute',
         width: '100%',
-        bottom: 0,
-        ...AppStyles.flexRow
+        bottom: 0
     },
     topLeft: {
         position: 'absolute',
@@ -40,6 +36,14 @@ export default StyleSheet.create({
     },
     button: {
         marginBottom: 10
+    },
+    buttonLeft: {
+        marginRight: 5,
+        marginLeft: 10
+    },
+    buttonRight: {
+        marginLeft: 5,
+        marginRight: 10
     },
     margin: {
         marginBottom: 20

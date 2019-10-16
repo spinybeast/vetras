@@ -16,7 +16,7 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
     useEffect(() => {
         if (currentDamageKey !== null) {
             const currentDamage = damages[currentDamageKey];
-            onSelectArea(currentDamage.area);
+            onSelectArea(currentDamage.part);
             setCurrentDamage(currentDamage);
         }
     }, [currentDamageKey]);
@@ -37,14 +37,14 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
         const editedDamage = {
             ...currentDamage,
             ...fields,
-            area: selectedArea
+            part: selectedArea
         };
         setDamagesCopy({...damagesCopy, [makeId(editedDamage)]: editedDamage});
         setCurrentDamage(editedDamage);
     };
 
     const getDamageValue = (type) => {
-        return currentDamage && currentDamage.type === type ? currentDamage.value : null;
+        return currentDamage && currentDamage.type === type ? currentDamage.degree : null;
     };
 
     const onSubmit = () => {
@@ -58,13 +58,13 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
     if (showCamera) {
         return <ExpoCamera onCloseCamera={() => setShowCamera(false)} onPhoto={(photo) => {
             setShowCamera(false);
-            editDamage({photo: photo.uri});
+            editDamage({photos: [...currentDamage.photos || [], photo.uri]});
         }} style={StyleSheet.absoluteFillObject}/>
     }
 
     return <Layout>
             <ScrollView>
-                <Text style={styles.header}>Select damaged areas</Text>
+                <Text style={styles.header}>Select damaged parts</Text>
                 <ImageMapper
                     imgHeight={300}
                     imgWidth={273}
@@ -76,17 +76,17 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
                 />
                 {selectedArea &&
                 <View>
-                    <Text style={styles.header}>Damaged area: {selectedArea}</Text>
+                    <Text style={styles.header}>Damaged part: {selectedArea}</Text>
                     {
                         !isGlass(selectedArea) &&
                         <View style={styles.flexRow}>
                             <Button light={!currentDamageIs('dent')} primary={currentDamageIs('dent')} style={styles.button}
-                                    onPress={() => editDamage({type: 'dent', value: null})}>
+                                    onPress={() => editDamage({type: 'dent', degree: null})}>
                                 <Text>Dent</Text>
                             </Button>
                             <Button light={!currentDamageIs('scratch')} primary={currentDamageIs('scratch')}
                                     style={styles.button}
-                                    onPress={() => editDamage({type: 'scratch', value: null})}>
+                                    onPress={() => editDamage({type: 'scratch', degree: null})}>
                                 <Text>Scratch</Text>
                             </Button>
                         </View>
@@ -99,7 +99,7 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
                                 <Picker
                                     mode="dropdown"
                                     selectedValue={getDamageValue('dent')}
-                                    onValueChange={value => editDamage({type: 'dent', value})}>
+                                    onValueChange={degree => editDamage({type: 'dent', degree})}>
                                     <Picker.Item label="---" value={null}/>
                                     <Picker.Item label="Paintless" value="paintless"/>
                                     <Picker.Item label="Convensional" value="convensional"/>
@@ -114,7 +114,7 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
                                 <Picker
                                     mode="dropdown"
                                     selectedValue={getDamageValue('scratch')}
-                                    onValueChange={value => editDamage({type: 'scratch', value})}>
+                                    onValueChange={degree => editDamage({type: 'scratch', degree})}>
                                     <Picker.Item label="---" value={null}/>
                                     <Picker.Item label="Small" value="small"/>
                                     <Picker.Item label="Large" value="large"/>
@@ -128,7 +128,7 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
                                 <Picker
                                     mode="dropdown"
                                     selectedValue={getDamageValue('glass')}
-                                    onValueChange={value => editDamage({type: 'glass', value})}>
+                                    onValueChange={degree => editDamage({type: 'glass', degree})}>
                                     <Picker.Item label="---" value={null}/>
                                     <Picker.Item label="Chip" value="chip"/>
                                     <Picker.Item label="Crack" value="crack"/>
@@ -137,19 +137,24 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
                             </Item>
                         }
                         {
-                            currentDamage.photo ?
-                                <View style={styles.photo}>
-                                    <Image style={styles.damagePhoto} onPress={() => setShowCamera(true)}
-                                           source={{uri: currentDamage.photo}}/>
-                                    <Button transparent style={{paddingTop: 30}} onPress={() => setShowCamera(true)}>
-                                        <Text>Remake</Text>
-                                    </Button>
-                                </View> :
-                                <Button style={styles.margin} block onPress={() => setShowCamera(true)}>
-                                    <Text>Add Photo</Text>
-                                </Button>
+                            currentDamage.photos && currentDamage.photos.length &&
+                                <View>
+                                    {
+                                        currentDamage.photos.map((photo, key) =>
+                                            <View key={key} style={styles.photo}>
+                                                <Image style={styles.damagePhoto} source={{uri: photo}}/>
+                                                <Button transparent style={{paddingTop: 30}} onPress={() => setShowCamera(true)}>
+                                                    <Text>Remake</Text>
+                                                </Button>
+                                            </View>
+                                        )
+                                    }
+                                </View>
                         }
-                        <Button disabled={!currentDamage.value} block onPress={onSubmit}><Text>Submit</Text></Button>
+                        <Button style={styles.margin} block onPress={() => setShowCamera(true)}>
+                            <Text>Add Photo</Text>
+                        </Button>
+                        <Button disabled={!currentDamage.degree} block onPress={onSubmit}><Text>Submit</Text></Button>
                     </Form>
                 </View>
                 }

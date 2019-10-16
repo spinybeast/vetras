@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {Spinner, Form, Item, Input, Label, Text, Button, View, Icon, Picker} from 'native-base';
+import {Spinner, Form, Item, Input, Label, Text, Button, View, Picker} from 'native-base';
 import useForm from 'react-hook-form'
 import styles from './CarInfoScreenStyle';
-import {decodeVIN, getPrincipals, searchAll} from '../../../Helpers/api';
+import {decodeVIN, fetchPrincipals, searchAll} from '../../../Helpers/api';
 import Slider from 'react-native-slider';
 import Layout from '../../../Theme/Layout';
 import { Keyboard } from 'react-native';
@@ -28,8 +28,8 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
             setValue('model', info.modelName);
             setValue('type', info.typeName);
             setLoading(false);
-        }).catch(e => setLoading(false));
-        getPrincipals().then(principals => setPrincipals(principals))
+        }).catch(() => setLoading(false));
+        fetchPrincipals().then(principals => setPrincipals(principals))
     }, []);
 
     const isValid = () => {

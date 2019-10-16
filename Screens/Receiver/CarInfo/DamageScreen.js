@@ -35,17 +35,18 @@ export default function DamageScreen({navigator, carInfo, damages = {}, startTim
 
                     return <ListItem thumbnail key={key} onPress={() => navigator.push('AddDamageScreen', {
                         carInfo,
+                        startTime,
                         damages: damagesCopy,
                         currentDamageKey: key
                     })}>
                         <Left>
-                            <Thumbnail square source={{uri: damage.photo}}/>
+                            <Thumbnail square source={{uri: damage.photos && damage.photos.length ? damage.photos[0] : null}}/>
                         </Left>
                         <Body>
-                            <Text>Area {damage.area}</Text>
+                            <Text>Area {damage.part}</Text>
                             {
                                 <Text key={damage.type} note numberOfLines={1}>
-                                    {damage.type}: {damage.value}
+                                    {damage.type}: {damage.degree}
                                 </Text>
                             }
                         </Body>

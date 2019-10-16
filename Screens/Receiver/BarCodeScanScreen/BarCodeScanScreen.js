@@ -20,7 +20,7 @@ export default function BarCodeScanScreen({navigator}) {
 
     const values = getValues();
     if (showScanner) {
-        return <ExpoBarCodeScanner navigator={navigator}/>
+        return <ExpoBarCodeScanner navigator={navigator} onCloseCamera={() => setShowScanner(false)}/>
     }
 
     return <Layout>
