@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Body, Button, View, Left, List, ListItem, Spinner, Right, Text, Thumbnail } from 'native-base';
 import { ScrollView } from 'react-native';
-import { fetchOrders, fetchVehicles } from "../../../Helpers/api";
+import { fetchOrdersByServices, fetchVehicles } from "../../../Helpers/api";
 import Layout from "../../../Theme/Layout";
 import styles from './OrdersScreenStyle';
-import { STATUS_IN_SERVICE } from '../../../constants';
+import {MINIO_URL, STATUS_IN_SERVICE} from '../../../constants';
 
-export default function OrdersScreen({navigator, selectedServices}) {
+export default function OrdersScreen({navigator, selectedServices = [], services}) {
     const [loading, setLoading] = useState(false);
     const [orders, setOrders] = useState([]);
 
     const prepareOrders = (orders, vehicles) => {
         orders.map(order => {
             order.vehicle = vehicles.filter(vehicle => vehicle._id === order.vehicleRecord)[0];
-            order.service = selectedServices.filter(service => service.type === order.serviceType)[0];
+            order.service = services.filter(service => service.type === order.serviceType)[0];
             return order;
         });
         return orders.filter(order => order.vehicle.status === STATUS_IN_SERVICE);
@@ -21,7 +21,7 @@ export default function OrdersScreen({navigator, selectedServices}) {
 
     useEffect(() => {
         setLoading(true);
-        fetchOrders(selectedServices.map(service => service.type)).then(orders => {
+        fetchOrdersByServices(selectedServices).then(orders => {
             let ordersCopy = [...orders];
             fetchVehicles(orders.map(order => order.vehicleRecord)).then(vehicles => {
                 setOrders(prepareOrders(ordersCopy, vehicles));
@@ -47,17 +47,17 @@ export default function OrdersScreen({navigator, selectedServices}) {
                                         return <ListItem thumbnail key={key}>
                                             <Left>
                                                 <Thumbnail square
-                                                           source={{uri: vehicle.photos ? vehicle.photos[0] : null}}/>
+                                                           source={{uri: vehicle.photos && vehicle.photos.length > 0 ? MINIO_URL + '/images/' + vehicle.photos[0] : null}}/>
                                             </Left>
                                             <Body>
-                                                <Text>{vehicle.licencePlate}</Text>
+                                                <Text>{vehicle.licensePlate}</Text>
                                                 <Text note numberOfLines={1}>
                                                     {vehicle.manufacturer} {vehicle.model}
                                                 </Text>
                                             </Body>
                                             <Right>
                                                 <Button transparent key={order.serviceType}
-                                                        onPress={() => navigator.push('JobScreen', {order})}>
+                                                        onPress={() => navigator.push('JobScreen', {order, selectedServices})}>
                                                     <Text>{order.serviceType}</Text>
                                                 </Button>
                                             </Right>

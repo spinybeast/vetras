@@ -13,7 +13,8 @@ export default function SubmitReceiverInfoScreen({navigator, carInfo, damages, p
             setLoading(false);
             setSuccess(true);
             setTimeout(() => navigator.push('BarCodeScanScreen'), 1000);
-        }).catch(() => {
+        }).catch((e) => {
+            console.log('ERROR: ', e);
             setLoading(false);
         });
     }, []);

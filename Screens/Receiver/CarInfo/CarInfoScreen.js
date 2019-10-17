@@ -8,14 +8,13 @@ import Layout from '../../../Theme/Layout';
 import { Keyboard } from 'react-native';
 
 export default function CarInfoScreen({navigator, VIN, startTime}) {
-    const [carInfo, setCarInfo] = useState({});
+    const [carInfo, setCarInfo] = useState({fuel: 1});
     const [loading, setLoading] = useState(false);
-    const [fuel, setFuel] = useState(1);
     const [principals, setPrincipals] = useState([]);
     const {register, setValue, handleSubmit, formState, getValues} = useForm();
     const onSubmit = data => {
         Keyboard.dismiss();
-        navigator.push('DamageScreen', {carInfo: {...data, fuel, VIN}, startTime});
+        navigator.push('DamageScreen', {carInfo: {...carInfo, ...data, VIN}, startTime});
     };
 
     useEffect(() => {
@@ -23,13 +22,15 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
         setTimeout(() => setLoading(false), 5000);
         decodeVIN(VIN).then(info => {
             info = info || {};
-            setCarInfo(info);
-            setValue('manufacturer', info.manuName);
-            setValue('model', info.modelName);
-            setValue('type', info.typeName);
+            setValue('manufacturer', info.manuName || '');
+            setValue('model', info.modelName || '');
+            setValue('type', info.typeName || '');
             setLoading(false);
         }).catch(() => setLoading(false));
-        fetchPrincipals().then(principals => setPrincipals(principals))
+        fetchPrincipals().then(principals => {
+            setPrincipals(principals);
+            setCarInfo({...carInfo, principal: principals[0].name})
+        })
     }, []);
 
     const isValid = () => {
@@ -65,15 +66,15 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
                                    value={carInfo.typeName}/>
                         </Item>
                         <Item floatingLabel>
-                            <Label>Licence plate</Label>
-                                <Input ref={register({name: 'licencePlate'})}
-                                       onChangeText={text => setValue('licencePlate', text)}/>
+                            <Label>License plate</Label>
+                                <Input ref={register({name: 'licensePlate'})}
+                                       onChangeText={text => setValue('licensePlate', text)}/>
                                 {/*<Icon active name='camera'/>*/}
                         </Item>
                         <Item floatingLabel>
                             <Label>Mileage (km)</Label>
                             <Input ref={register({name: 'mileage'})}
-                                   onChangeText={text => setValue('mileage', text)}
+                                   onChangeText={text => setValue('mileage', parseInt(text))}
                                    keyboardType="numeric"/>
                         </Item>
                         <Item picker style={{marginLeft: 15, marginTop: 20}}>
@@ -89,14 +90,14 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
                             </Picker>
                         </Item>
                         <Item last>
-                            <Label>Fuel ({fuel})</Label>
+                            <Label>Fuel ({carInfo.fuel})</Label>
                             <View style={styles.slider}>
                                 <Slider
-                                    value={fuel}
+                                    value={carInfo.fuel}
                                     minimumValue={1}
                                     maximumValue={8}
                                     step={1}
-                                    onValueChange={value => setFuel(value)}
+                                    onValueChange={fuel => setCarInfo({...carInfo, fuel})}
                                 />
                             </View>
                         </Item>

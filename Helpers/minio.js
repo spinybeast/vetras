@@ -1,47 +1,32 @@
 import AWS from "aws-sdk";
+import {MINIO_ACCESS_KEY, MINIO_SECRET_KEY, MINIO_URL} from "../constants";
 
 const minioClient = new AWS.S3({
-    accessKeyId: "340JFURPWTAVEF1FEHIX",
-    secretAccessKey: "cQ6KGzPE42nqu6dzpJpvULuWqykOn5xGzlo1AlYQ",
-    endpoint: "vetra.logimove.com:9000",
+    accessKeyId: MINIO_ACCESS_KEY,
+    secretAccessKey: MINIO_SECRET_KEY,
+    endpoint: MINIO_URL,
     s3ForcePathStyle: true,
     signatureVersion: "v4"
 });
 
-export function uploadImage(url) {
-    const fileName = url.replace(/^.*[\\\/]/, '');
-    const albumPhotosKey = "images//";
+export async function uploadPhotos(photos, key) {
+    const promises = photos.map((uri, index) => uploadPhoto(uri, key + '-' + index));
+    return await Promise.all(promises);
+}
 
-    const photoKey = albumPhotosKey + fileName;
-
-    // Use S3 ManagedUpload class as it supports multipart uploads
-    const upload = new AWS.S3.ManagedUpload({
-        credentials: {accessKeyId: "340JFURPWTAVEF1FEHIX",
-            secretAccessKey: "cQ6KGzPE42nqu6dzpJpvULuWqykOn5xGzlo1AlYQ",
-            endpoint: "vetra.logimove.com:9000",
-            s3ForcePathStyle: true,
-            signatureVersion: "v4",},
-        params: {
-            Bucket: 'images',
-            Key: photoKey,
-            Body: url,
-            ACL: "public-read"
-        }
+export async function uploadPhoto(uri, key) {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const signedUrl = await minioClient.getSignedUrl('putObject', {
+        Bucket: "images",
+        ContentType: "image/jpeg",
+        Key: key + '.jpg',
     });
 
-    const promise = upload.promise();
-
-    promise.then(
-        function(data) {
-            console.log("Successfully uploaded photo.");
-        },
-        function(err) {
-            console.log("There was an error uploading your photo: ", err.message);
-        }
-    );
+    return fetch(signedUrl, {
+        method: 'PUT',
+        body: blob
+    })
+        .then(res => key + '.jpg')
+        .catch(e => console.log('e', e))
 }
-
-export function getImage(id) {
-
-}
-

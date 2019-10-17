@@ -1,5 +1,6 @@
 import {insert, update, search, searchAll} from "./elastic";
-import { ROLE_RECEIVER, ROLE_TECHNICIAN, STATUS_IN_SERVICE, STATUS_READY, VIN_DECODE_URL } from '../constants';
+import {uploadPhoto} from "./minio";
+import {ROLE_RECEIVER, ROLE_TECHNICIAN, STATUS_IN_SERVICE, STATUS_READY, VIN_DECODE_URL} from '../constants';
 
 export async function login({login, password}) {
     const users = [
@@ -39,94 +40,148 @@ export function fetchServices() {
     return searchAll('services', 'service');
 }
 
-export function fetchOrders(selectedServices) {
-    const query = {
-        bool: {
-            must: {
-                bool: {
-                    should: selectedServices.map(service => ({match: {serviceType: service}}))
-                }
-            },
-            must_not: {
-                exists: {
-                    field: "completedAt"
+export function fetchOrdersByServices(selectedServices) {
+    const body = {
+        query: {
+            bool: {
+                must: {
+                    bool: {
+                        should: selectedServices.map(service => ({match: {"order.serviceType": service}}))
+                    }
+                },
+                must_not: {
+                    exists: {
+                        field: "order.completedAt"
+                    }
                 }
             }
-        }
+        },
+        sort: [{"order.vehicleRecord": {"order": "desc"}}]
     };
-    console.log(query);
-    return search('orders', null, query);
+    return search('orders', 'order', body);
+}
+
+export function fetchOrdersByVehicle(vehicleId) {
+    const body = {
+        query: {
+            bool: {
+                must: {
+                    match: {
+                        "order.vehicleRecord": vehicleId
+                    }
+                },
+                must_not: {
+                    exists: {
+                        field: "order.completedAt"
+                    }
+                }
+            }
+        },
+    };
+    return search('orders', 'order', body);
 }
 
 export function fetchVehicles(ids) {
-    const query = {
-       ids : {
-           values: ids
-       }
+    const body = {
+        query: {
+            ids: {
+                values: ids
+            }
+        }
     };
-    return search('vehicles', null, query);
+    return search('vehicles', 'vehicle', body);
 }
 
-async function saveVehicle(carInfo, damages, services, photos) {
-    damages.forEach(damage => delete damage.id);
-    const body = {
+async function saveVehicle(carInfo, damages, photos) {
+    for (let damage of damages) {
+        if (damage.photos && damage.photos.length) {
+            const promises = damage.photos.map((uri, index) => uploadPhoto(uri, damage.id + '-' + index));
+            damage.photos = await Promise.all(promises);
+        }
+        delete damage.id;
+    }
+
+    const promises = photos.map((uri, index) => uploadPhoto(uri, carInfo.VIN + '-' + index));
+    const photosUploaded = await Promise.all(promises);
+
+    const vehicle = {
         ...carInfo,
         damages,
-        photos,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        status: carInfo.servicesOrdered.length > 0 ? STATUS_IN_SERVICE : STATUS_READY
+        photos: photosUploaded,
+        createdAt: getDate(),
+        updatedAt: getDate(),
+        status: carInfo.servicesOrdered && carInfo.servicesOrdered.length > 0 ? STATUS_IN_SERVICE : STATUS_READY
     };
 
-    return insert('vehicles', body);
+    return insert('vehicles', {vehicle});
 }
 
 async function saveOrder(vehicleId, service, startTime) {
-    const body = {
+    const order = {
         vehicleRecord: vehicleId,
         serviceType: service,
         createdAt: startTime
     };
 
-    return insert('orders', body);
+    return insert('orders', {order});
 }
 
-async function saveLabour(orderId, startTime) {
-    const body = {
-        order: orderId,
+async function saveLabour(vehicleId, startTime) {
+    const work = {
+        itemType: 'vehicle',
+        reference: vehicleId,
         employee: '1',
         startedAt: startTime,
         duration: (new Date() - startTime) / 1000
     };
 
-    return insert('labour_tracking', body);
+    return insert('labour_tracking', {work});
 }
 
 export async function saveReceiverInfo(carInfo, damages, photos, startTime) {
     const vehicleId = await saveVehicle(carInfo, damages, photos);
 
-    const orders = carInfo.servicesOrdered.map(service => saveOrder(vehicleId, service, startTime));
-    const orderIds = await Promise.all(orders);
+    if (carInfo.servicesOrdered && carInfo.servicesOrdered.length > 0) {
+        const orders = carInfo.servicesOrdered.map(service => saveOrder(vehicleId, service, startTime));
+        await Promise.all(orders);
+    }
 
-    const labours = orderIds.map(id => saveLabour(id, startTime));
-    return await Promise.all(labours);
-
+    return saveLabour(vehicleId, startTime);
 }
 
-export function completeJob(orderId, servicesSubtypes, startTime) {
-    let order = {
-        completedAt: new Date(),
+export function completeJob(order, servicesSubtypes, startTime) {
+    let orderBody = {
+        completedAt: getDate(),
     };
     if (servicesSubtypes.length) {
-        order.serviceSubtypesActual = servicesSubtypes
+        orderBody.serviceSubtypesActual = servicesSubtypes
     }
-    const labour = {
-        order: orderId,
+    const work = {
+        itemType: 'order',
+        reference: order._id,
         employee: '2',
         startedAt: startTime,
         duration: (new Date() - startTime) / 1000
     };
-    return update('orders', orderId, order).then(() => {
-        insert('labour_tracking', labour);
+    return update('orders', order._id, {order: orderBody}).then(() => {
+        insert('labour_tracking', {work}).then(async () => {
+            const orders = await fetchOrdersByVehicle(order.vehicleRecord);
+            console.log(orders);
+            if (orders && orders.length === 0) {
+                setVehicleReady(order.vehicleRecord);
+            }
+        });
     });
+}
+
+function setVehicleReady(vehicleId) {
+    const vehicle = {
+        updatedAt: getDate(),
+        status: STATUS_READY
+    };
+    return update('vehicles', vehicleId, {vehicle});
+}
+
+function getDate() {
+    return (new Date()).toJSON();
 }

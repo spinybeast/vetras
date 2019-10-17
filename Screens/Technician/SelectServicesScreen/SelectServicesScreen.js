@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Text} from 'native-base';
-import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import {Button, Text, View} from 'native-base';
+import SelectMultiple from 'react-native-select-multiple'
 import {fetchServices} from "../../../Helpers/api";
 import Layout from "../../../Theme/Layout";
 import styles from './SelectServicesScreenStyle';
@@ -13,20 +13,18 @@ export default function SelectServicesScreen({navigator}) {
     }, []);
 
     const submit = () => {
-        const selected = selectedServices.map(item => {
-            return services.filter(service => service.type === item)[0];
-        });
-        navigator.push('OrdersScreen', {selectedServices: selected})
+        navigator.push('OrdersScreen', {selectedServices, services})
     };
 
     return <Layout>
-        <SectionedMultiSelect
-            items={services.map(service => ({id: service.type, name: service.type}))}
-            uniqueKey="id"
-            selectText="Choose service types"
-            onSelectedItemsChange={(items) => selectServices(items)}
-            selectedItems={selectedServices}
-        />
+        <View>
+            <Text style={styles.header}>Choose service types</Text>
+            <SelectMultiple
+                items={services.map(service => (service.type))}
+                onSelectionsChange={(items) => selectServices(items.map(item => item.value))}
+                selectedItems={selectedServices}
+            />
+        </View>
         <Button style={styles.button} block onPress={() => submit()} disabled={!selectedServices.length}><Text>Submit</Text></Button>
     </Layout>
 
