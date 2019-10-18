@@ -18,8 +18,8 @@ export default function DamageScreen({navigator, carInfo, damages = [], startTim
     };
 
     return <Layout centeredContent={false} footer={footer}>
-        <View style={[styles.flexRow, {marginTop: 20}]}>
-            <Text style={[styles.header, {lineHeight: 20}]}>Add damages</Text>
+        <View style={styles.flexRow}>
+            <Text style={[styles.header]}>Add damages</Text>
             <Button style={styles.iconButton}
                     onPress={() => navigator.push('AddDamageScreen', {carInfo, startTime, damages: damagesCopy})}>
                 <Icon name="add"/>
@@ -38,7 +38,7 @@ export default function DamageScreen({navigator, carInfo, damages = [], startTim
                             <Thumbnail square source={{uri: damage.photos && damage.photos.length ? damage.photos[0] : null}}/>
                         </Left>
                         <Body>
-                            <Text>Area {damage.part}</Text>
+                            <Text>{damage.part}</Text>
                             <Text note numberOfLines={1}>
                                 {damage.type}: {damage.degree}
                             </Text>

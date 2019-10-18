@@ -3,7 +3,7 @@ import { Container, Content, Footer } from 'native-base';
 import styles from './ApplicationStyles';
 
 export default function Layout({centeredContent = true, footer, children}) {
-    let style = styles.flexColumn;
+    let style = {...styles.flexColumn, flexGrow: 1, marginTop: 30};
 
     if (centeredContent) {
         style = {...style, justifyContent: 'center'}

@@ -15,7 +15,7 @@ export default StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         marginBottom: 20,
-        marginTop: 20
+        paddingTop: 10
     },
     label: {
         fontSize: 20,

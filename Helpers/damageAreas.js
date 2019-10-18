@@ -1,14 +1,14 @@
 export const imageSource = require('../assets/damage-areas.jpg');
-export const GLASS_IDS = ['9', '22'];
+export const GLASS_IDS = ['Windshield', 'Rear Glass'];
 
 export function isGlass(id) {
-    return GLASS_IDS.indexOf(id) !== -1;
+    return !!~GLASS_IDS.indexOf(id);
 }
 
-export const MAPPING = [
+export const DAMAGES_MAPPING = [
     {
         id: "1",
-        name: "1",
+        name: "Front Valance",
         shape: "rectangle",
         x1: 84,
         y1: 3,
@@ -19,7 +19,7 @@ export const MAPPING = [
     },
     {
         id: "2",
-        name: "2",
+        name: "Front Bumper",
         shape: "rectangle",
         x1: 103,
         y1: 22,
@@ -30,7 +30,7 @@ export const MAPPING = [
     },
     {
         id: "3",
-        name: "3",
+        name: "Grille",
         shape: "rectangle",
         x1: 79,
         y1: 39,
@@ -41,7 +41,7 @@ export const MAPPING = [
     },
     {
         id: "4",
-        name: "4",
+        name: "Hood",
         shape: "rectangle",
         x1: 82,
         y1: 58,
@@ -52,7 +52,7 @@ export const MAPPING = [
     },
     {
         id: "5",
-        name: "5",
+        name: "Left Front Fascia",
         shape: "rectangle",
         x1: 47,
         y1: 21,
@@ -63,7 +63,7 @@ export const MAPPING = [
     },
     {
         id: "6",
-        name: "6",
+        name: "Right Front Fascia",
         shape: "rectangle",
         x1: 171,
         y1: 22,
@@ -74,7 +74,7 @@ export const MAPPING = [
     },
     {
         id: "7",
-        name: "7",
+        name: "Left Front Wing",
         shape: "rectangle",
         x1: 23,
         y1: 57,
@@ -85,7 +85,7 @@ export const MAPPING = [
     },
     {
         id: "8",
-        name: "8",
+        name: "Right Front Wing",
         shape: "rectangle",
         x1: 195,
         y1: 57,
@@ -96,7 +96,7 @@ export const MAPPING = [
     },
     {
         id: "9",
-        name: "9",
+        name: "Windshield",
         shape: "rectangle",
         x1: 105,
         y1: 93,
@@ -107,7 +107,7 @@ export const MAPPING = [
     },
     {
         id: "10",
-        name: "10",
+        name: "Left A-Pillar",
         shape: "rectangle",
         x1: 80,
         y1: 94,
@@ -118,7 +118,7 @@ export const MAPPING = [
     },
     {
         id: "11",
-        name: "11",
+        name: "Right A-Pillar",
         shape: "rectangle",
         x1: 172,
         y1: 95,
@@ -129,7 +129,7 @@ export const MAPPING = [
     },
     {
         id: "12",
-        name: "12",
+        name: "Left Rocker Panel",
         shape: "rectangle",
         x1: 3,
         y1: 98,
@@ -140,7 +140,7 @@ export const MAPPING = [
     },
     {
         id: "13",
-        name: "13",
+        name: "Left Front Door",
         shape: "rectangle",
         x1: 30,
         y1: 101,
@@ -151,7 +151,7 @@ export const MAPPING = [
     },
     {
         id: "14",
-        name: "14",
+        name: "Left Center Pillar",
         shape: "rectangle",
         x1: 80,
         y1: 137,
@@ -162,7 +162,7 @@ export const MAPPING = [
     },
     {
         id: "15",
-        name: "15",
+        name: "Roof",
         shape: "rectangle",
         x1: 104,
         y1: 120,
@@ -173,7 +173,7 @@ export const MAPPING = [
     },
     {
         id: "16",
-        name: "16",
+        name: "Right Center Pillar",
         shape: "rectangle",
         x1: 172,
         y1: 138,
@@ -184,7 +184,7 @@ export const MAPPING = [
     },
     {
         id: "17",
-        name: "17",
+        name: "Right Front Door",
         shape: "rectangle",
         x1: 194,
         y1: 99,
@@ -195,7 +195,7 @@ export const MAPPING = [
     },
     {
         id: "18",
-        name: "18",
+        name: "Right Rocker Panel",
         shape: "rectangle",
         x1: 244,
         y1: 99,
@@ -206,7 +206,7 @@ export const MAPPING = [
     },
     {
         id: "19",
-        name: "19",
+        name: "Left Back Door",
         shape: "rectangle",
         x1: 29,
         y1: 149,
@@ -217,7 +217,7 @@ export const MAPPING = [
     },
     {
         id: "20",
-        name: "20",
+        name: "Right Back Door",
         shape: "rectangle",
         x1: 195,
         y1: 151,
@@ -228,7 +228,7 @@ export const MAPPING = [
     },
     {
         id: "21",
-        name: "21",
+        name: "Left Back Wing",
         shape: "rectangle",
         x1: 23,
         y1: 192,
@@ -239,7 +239,7 @@ export const MAPPING = [
     },
     {
         id: "22",
-        name: "22",
+        name: "Rear Glass",
         shape: "rectangle",
         x1: 95,
         y1: 207,
@@ -250,7 +250,7 @@ export const MAPPING = [
     },
     {
         id: "23",
-        name: "23",
+        name: "Right Back Wing",
         shape: "rectangle",
         x1: 178,
         y1: 192,
@@ -261,7 +261,7 @@ export const MAPPING = [
     },
     {
         id: "24",
-        name: "24",
+        name: "Trunk",
         shape: "rectangle",
         x1: 92,
         y1: 227,
@@ -272,7 +272,7 @@ export const MAPPING = [
     },
     {
         id: "25",
-        name: "25",
+        name: "Left Rear Fascia",
         shape: "rectangle",
         x1: 45,
         y1: 260,
@@ -283,7 +283,7 @@ export const MAPPING = [
     },
     {
         id: "26",
-        name: "26",
+        name: "Read Bumper",
         shape: "rectangle",
         x1: 88,
         y1: 261,
@@ -294,7 +294,7 @@ export const MAPPING = [
     },
     {
         id: "27",
-        name: "27",
+        name: "Right Rear Fascia",
         shape: "rectangle",
         x1: 190,
         y1: 261,
@@ -305,7 +305,7 @@ export const MAPPING = [
     },
     {
         id: "28",
-        name: "28",
+        name: "Rear Valance",
         shape: "rectangle",
         x1: 89,
         y1: 284,
@@ -316,7 +316,7 @@ export const MAPPING = [
     },
     {
         id: "29",
-        name: "29",
+        name: "Wheel",
         shape: "rectangle",
         x1: 7,
         y1: 245,

@@ -164,12 +164,12 @@ export function completeJob(order, servicesSubtypes, startTime) {
         duration: (new Date() - startTime) / 1000
     };
     return update('orders', order._id, {order: orderBody}).then(() => {
-        insert('labour_tracking', {work}).then(async () => {
-            const orders = await fetchOrdersByVehicle(order.vehicleRecord);
-            console.log(orders);
-            if (orders && orders.length === 0) {
-                setVehicleReady(order.vehicleRecord);
-            }
+        insert('labour_tracking', {work}).then(() => {
+           fetchOrdersByVehicle(order.vehicleRecord).then(orders => {
+               if (orders && orders.length === 0) {
+                   setVehicleReady(order.vehicleRecord);
+               }
+           });
         });
     });
 }

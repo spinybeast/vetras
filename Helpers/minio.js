@@ -30,3 +30,9 @@ export async function uploadPhoto(uri, key) {
         .then(res => key + '.jpg')
         .catch(e => console.log('e', e))
 }
+
+export function getVehiclePhoto(vehicle) {
+    return vehicle.photos && vehicle.photos.length > 0 ?
+        {uri: MINIO_URL + '/images/' + vehicle.photos[0]} :
+        require('../assets/vehicle.png');
+}

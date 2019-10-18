@@ -14,7 +14,7 @@ export default function JobScreen({navigator, order, selectedServices, services}
     useEffect(() => setStartTime(new Date()), []);
 
     const complete = () => {
-        completeJob(order, subtypes, startTime).then(() => navigator.push('OrdersScreen', selectedServices, services));
+        completeJob(order, subtypes, startTime).then(() => navigator.push('OrdersScreen', {selectedServices, services}));
     };
 
     return <Layout>
@@ -24,11 +24,11 @@ export default function JobScreen({navigator, order, selectedServices, services}
         <View>
             {
                 service.hasOwnProperty('subtypesAvailable') && service.subtypesAvailable.length ?
-                <SelectMultiple
-                    items={service.subtypesAvailable.map(type => ({label: type, value: type}))}
-                    onSelectionsChange={(items) => selectSubtypes(items.map(item => item.value))}
-                    selectedItems={subtypes}
-                /> : null
+                    <SelectMultiple
+                        items={service.subtypesAvailable.map(type => ({label: type, value: type}))}
+                        onSelectionsChange={(items) => selectSubtypes(items.map(item => item.value))}
+                        selectedItems={subtypes}
+                    /> : null
             }
         </View>
         <Button block style={styles.button} onPress={complete}><Text>Completed</Text></Button>

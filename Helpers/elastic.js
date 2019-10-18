@@ -40,7 +40,7 @@ export function update(index, id, body) {
         app: index
     });
 
-    return client.index({type: '_update/'+ id, body: {doc: body}})
+    return client.index({type: '_update/' + id, body: {doc: body}, refresh: true})
         .then(res => res._id)
         .catch(err => {
             console.log('update error: ', err);

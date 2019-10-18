@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {Spinner, Form, Item, Input, Label, Text, Button, View, Picker} from 'native-base';
-import useForm from 'react-hook-form'
 import styles from './CarInfoScreenStyle';
-import {decodeVIN, fetchPrincipals, searchAll} from '../../../Helpers/api';
+import {decodeVIN, fetchPrincipals} from '../../../Helpers/api';
 import Slider from 'react-native-slider';
 import Layout from '../../../Theme/Layout';
-import { Keyboard } from 'react-native';
+import {Keyboard} from 'react-native';
 
 export default function CarInfoScreen({navigator, VIN, startTime}) {
-    const [carInfo, setCarInfo] = useState({fuel: 1});
+    const [carInfo, setCarInfo] = useState({fuel: 1, VIN});
     const [loading, setLoading] = useState(false);
     const [principals, setPrincipals] = useState([]);
-    const {register, setValue, handleSubmit, formState, getValues} = useForm();
-    const onSubmit = data => {
+
+    const onSubmit = () => {
         Keyboard.dismiss();
-        navigator.push('DamageScreen', {carInfo: {...carInfo, ...data, VIN}, startTime});
+        navigator.push('DamageScreen', {carInfo, startTime});
     };
 
     useEffect(() => {
@@ -22,9 +21,12 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
         setTimeout(() => setLoading(false), 5000);
         decodeVIN(VIN).then(info => {
             info = info || {};
-            setValue('manufacturer', info.manuName || '');
-            setValue('model', info.modelName || '');
-            setValue('type', info.typeName || '');
+            setCarInfo({
+                ...carInfo,
+                manufacturer: info.manuName || '',
+                model: info.modelName || '',
+                type: info.typeName || ''
+            });
             setLoading(false);
         }).catch(() => setLoading(false));
         fetchPrincipals().then(principals => {
@@ -34,12 +36,11 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
     }, []);
 
     const isValid = () => {
-        if (!formState.dirty) {
-            return false;
-        }
-        const values = getValues();
-        return !values.make || !values.model;
+        return carInfo.manufacturer && carInfo.manufacturer.length > 0 &&
+            carInfo.model && carInfo.model.length > 0 &&
+            carInfo.licensePlate && carInfo.licensePlate.length > 0;
     };
+
     return <Layout>
         <Text style={styles.header}>VIN: {VIN}</Text>
         <View>
@@ -49,32 +50,27 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
                     <Form>
                         <Item floatingLabel>
                             <Label>Manufacturer</Label>
-                            <Input ref={register({name: 'manufacturer'}, {required: true})}
-                                   onChangeText={text => setValue('manufacturer', text)}
-                                   value={carInfo.manuName}/>
+                            <Input onChangeText={manufacturer => setCarInfo({...carInfo, manufacturer})}
+                                   value={carInfo.manufacturer}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>Model</Label>
-                            <Input ref={register({name: 'model'})}
-                                   onChangeText={text => setValue('model', text)}
-                                   value={carInfo.modelName}/>
+                            <Input onChangeText={model => setCarInfo({...carInfo, model})}
+                                   value={carInfo.model}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>Type</Label>
-                            <Input ref={register({name: 'type'})}
-                                   onChangeText={text => setValue('type', text)}
-                                   value={carInfo.typeName}/>
+                            <Input onChangeText={type => setCarInfo({...carInfo, type})}
+                                   value={carInfo.type}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>License plate</Label>
-                                <Input ref={register({name: 'licensePlate'})}
-                                       onChangeText={text => setValue('licensePlate', text)}/>
-                                {/*<Icon active name='camera'/>*/}
+                            <Input onChangeText={licensePlate => setCarInfo({...carInfo, licensePlate})}/>
+                            {/*<Icon active name='camera'/>*/}
                         </Item>
                         <Item floatingLabel>
                             <Label>Mileage (km)</Label>
-                            <Input ref={register({name: 'mileage'})}
-                                   onChangeText={text => setValue('mileage', parseInt(text))}
+                            <Input onChangeText={mileage => setCarInfo({...carInfo, mileage: parseInt(mileage)})}
                                    keyboardType="numeric"/>
                         </Item>
                         <Item picker style={{marginLeft: 15, marginTop: 20}}>
@@ -101,7 +97,7 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
                                 />
                             </View>
                         </Item>
-                        <Button disabled={!isValid()} block onPress={handleSubmit(onSubmit)}>
+                        <Button disabled={!isValid()} block onPress={() => onSubmit()}>
                             <Text>Submit</Text>
                         </Button>
                     </Form>

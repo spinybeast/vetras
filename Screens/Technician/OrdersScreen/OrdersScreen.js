@@ -4,9 +4,10 @@ import { ScrollView } from 'react-native';
 import { fetchOrdersByServices, fetchVehicles } from "../../../Helpers/api";
 import Layout from "../../../Theme/Layout";
 import styles from './OrdersScreenStyle';
-import {MINIO_URL, STATUS_IN_SERVICE} from '../../../constants';
+import {STATUS_IN_SERVICE} from '../../../constants';
+import {getVehiclePhoto} from "../../../Helpers/minio";
 
-export default function OrdersScreen({navigator, selectedServices = [], services}) {
+export default function OrdersScreen({navigator, selectedServices, services}) {
     const [loading, setLoading] = useState(false);
     const [orders, setOrders] = useState([]);
 
@@ -46,8 +47,7 @@ export default function OrdersScreen({navigator, selectedServices = [], services
                                         }
                                         return <ListItem thumbnail key={key}>
                                             <Left>
-                                                <Thumbnail square
-                                                           source={{uri: vehicle.photos && vehicle.photos.length > 0 ? MINIO_URL + '/images/' + vehicle.photos[0] : null}}/>
+                                                <Thumbnail square source={getVehiclePhoto(vehicle)}/>
                                             </Left>
                                             <Body>
                                                 <Text>{vehicle.licensePlate}</Text>
@@ -57,7 +57,7 @@ export default function OrdersScreen({navigator, selectedServices = [], services
                                             </Body>
                                             <Right>
                                                 <Button transparent key={order.serviceType}
-                                                        onPress={() => navigator.push('JobScreen', {order, selectedServices})}>
+                                                        onPress={() => navigator.push('JobScreen', {order, selectedServices, services})}>
                                                     <Text>{order.serviceType}</Text>
                                                 </Button>
                                             </Right>
