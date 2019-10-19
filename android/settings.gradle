@@ -1,9 +1,10 @@
 include ':app'
 include ':react-native-vector-icons'
 project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
-include ':react-native-fs'
-project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
-
+include ':openalpr'
+project(':openalpr').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-openalpr/android/libraries/openalpr')
+include ':opencv'
+project(':opencv').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-openalpr/android/libraries/opencv')
 // Import gradle helpers for unimodules.
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
 

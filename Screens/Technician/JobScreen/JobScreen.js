@@ -4,7 +4,6 @@ import SelectMultiple from 'react-native-select-multiple'
 import Layout from '../../../Theme/Layout';
 import styles from './JobScreenStyle';
 import { completeJob } from '../../../Helpers/api';
-import {ScrollView} from "react-native";
 
 export default function JobScreen({navigator, order, selectedServices, services}) {
     const {vehicle, service} = order;
@@ -18,21 +17,21 @@ export default function JobScreen({navigator, order, selectedServices, services}
     };
 
     return <Layout>
-        <ScrollView>
-        <Text style={[styles.header, styles.button]}>{order.serviceType}</Text>
-        <Text style={styles.subheader}>License Plate: {vehicle.licensePlate}</Text>
         <View>
-            {
-                service.hasOwnProperty('subtypesAvailable') && service.subtypesAvailable.length ?
-                    <SelectMultiple
-                        items={service.subtypesAvailable.map(type => ({label: type, value: type}))}
-                        onSelectionsChange={(items) => selectSubtypes(items.map(item => item.value))}
-                        selectedItems={subtypes}
-                    /> : null
-            }
+            <Text style={[styles.header, styles.button]}>{order.serviceType}</Text>
+            <Text style={styles.subheader}>License Plate: {vehicle.licensePlate}</Text>
+            <View>
+                {
+                    service.hasOwnProperty('subtypesAvailable') && service.subtypesAvailable.length ?
+                        <SelectMultiple
+                            items={service.subtypesAvailable.map(type => ({label: type, value: type}))}
+                            onSelectionsChange={(items) => selectSubtypes(items.map(item => item.value))}
+                            selectedItems={subtypes}
+                        /> : null
+                }
+            </View>
+            <Button block style={styles.button} onPress={complete}><Text>Completed</Text></Button>
         </View>
-        <Button block style={styles.button} onPress={complete}><Text>Completed</Text></Button>
-        </ScrollView>
     </Layout>
 
 }

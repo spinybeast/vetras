@@ -9,7 +9,6 @@ import java.util.List;
 import expo.loaders.provider.interfaces.AppLoaderPackagesProviderInterface;
 import host.exp.exponent.generated.BasePackageList;
 import okhttp3.OkHttpClient;
-import com.rnfs.RNFSPackage;
 
 // Needed for `react-native link`
 import com.facebook.react.ReactApplication;
@@ -25,8 +24,7 @@ public class MainApplication extends ExpoApplication implements AppLoaderPackage
    // Needed for `react-native link`
   public List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
-       new VectorIconsPackage(),
-       new RNFSPackage()
+       new VectorIconsPackage()
     );
   }
 

@@ -25,6 +25,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-easy-router": "^3.0.2",
     "react-native-image-mapper": "^0.1.11",
+    "react-native-openalpr": "^2.0.1",
     "react-native-select-multiple": "^2.0.1",
     "react-native-slider": "^0.11.0",
     "react-native-unimodules": "^0.6.0",

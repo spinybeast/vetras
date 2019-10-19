@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Spinner, Form, Item, Input, Label, Text, Button, View, Picker} from 'native-base';
+import React, {useEffect, useState, Fragment} from 'react';
+import {Spinner, Form, Item, Input, Label, Text, Button, Icon, View, Picker} from 'native-base';
 import styles from './CarInfoScreenStyle';
 import {decodeVIN, fetchPrincipals} from '../../../Helpers/api';
 import Slider from 'react-native-slider';
@@ -10,6 +10,7 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
     const [carInfo, setCarInfo] = useState({fuel: 1, VIN});
     const [loading, setLoading] = useState(false);
     const [principals, setPrincipals] = useState([]);
+    const [showRest, setShowRest] = useState(true);
 
     const onSubmit = () => {
         Keyboard.dismiss();
@@ -42,8 +43,8 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
     };
 
     return <Layout>
-        <Text style={styles.header}>VIN: {VIN}</Text>
         <View>
+            <Text style={styles.header}>VIN: {VIN}</Text>
             {
                 loading ?
                     <Spinner/> :
@@ -73,34 +74,40 @@ export default function CarInfoScreen({navigator, VIN, startTime}) {
                             <Input onChangeText={mileage => setCarInfo({...carInfo, mileage: parseInt(mileage)})}
                                    keyboardType="numeric"/>
                         </Item>
-                        <Item picker style={{marginLeft: 15, marginTop: 20}}>
-                            <Label>Principal</Label>
-                            <Picker
-                                mode="dropdown"
-                                selectedValue={carInfo.principal}
-                                onValueChange={principal => setCarInfo({...carInfo, principal})}>
-                                {
-                                    principals.map((principal, key) =>
-                                        <Picker.Item key={key} label={principal.name} value={principal.name}/>)
-                                }
-                            </Picker>
-                        </Item>
-                        <Item last>
-                            <Label>Fuel ({carInfo.fuel})</Label>
-                            <View style={styles.slider}>
-                                <Slider
-                                    value={carInfo.fuel}
-                                    minimumValue={1}
-                                    maximumValue={8}
-                                    step={1}
-                                    onValueChange={fuel => setCarInfo({...carInfo, fuel})}
-                                />
-                            </View>
-                        </Item>
-                        <Button disabled={!isValid()} block onPress={() => onSubmit()}>
-                            <Text>Submit</Text>
-                        </Button>
+                        {
+                            showRest ?
+                            <Fragment>
+                                <Item picker style={{marginLeft: 15, marginTop: 20}}>
+                                    <Label>Principal</Label>
+                                    <Picker
+                                        mode="dropdown"
+                                        selectedValue={carInfo.principal}
+                                        onValueChange={principal => setCarInfo({...carInfo, principal})}>
+                                        {
+                                            principals.map((principal, key) =>
+                                                <Picker.Item key={key} label={principal.name} value={principal.name}/>)
+                                        }
+                                    </Picker>
+                                </Item>
+                                <Item last>
+                                    <Label>Fuel ({carInfo.fuel})</Label>
+                                    <View style={styles.slider}>
+                                        <Slider
+                                            value={carInfo.fuel}
+                                            minimumValue={1}
+                                            maximumValue={8}
+                                            step={1}
+                                            onValueChange={fuel => setCarInfo({...carInfo, fuel})}
+                                        />
+                                    </View>
+                                </Item>
+                                <Button disabled={!isValid()} block onPress={() => onSubmit()}>
+                                    <Text>Submit</Text>
+                                </Button>
+                            </Fragment> : null
+                        }
                     </Form>
+
             }
         </View>
     </Layout>

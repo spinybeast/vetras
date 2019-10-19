@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, Button, Form, Picker, Item, Label } from 'native-base';
+import React, {useState, useEffect} from 'react';
+import {Text, View, Button, Form, Picker, Item, Label} from 'native-base';
 import ImageMapper from 'react-native-image-mapper';
-import { imageSource, DAMAGES_MAPPING, isGlass } from '../../../Helpers/damageAreas';
+import {imageSource, DAMAGES_MAPPING, isGlass} from '../../../Helpers/damageAreas';
 import styles from './CarInfoScreenStyle';
 import Layout from '../../../Theme/Layout';
-import { Image, StyleSheet, ScrollView } from "react-native";
+import {Image, StyleSheet} from "react-native";
 import ExpoCamera from "../../../Components/ExpoCamera";
 
 export default function AddDamageScreen({navigator, carInfo, startTime, damages = [], currentDamageKey = null}) {
@@ -63,7 +63,7 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
     }
 
     return <Layout>
-            <ScrollView>
+        <View>
             <Text style={styles.header}>Select damaged parts</Text>
             <ImageMapper
                 imgHeight={300}
@@ -138,18 +138,19 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
                     }
                     {
                         currentDamage.photos && currentDamage.photos.length &&
-                            <View>
-                                {
-                                    currentDamage.photos.map((photo, key) =>
-                                        <View key={key} style={styles.photo}>
-                                            <Image style={styles.damagePhoto} source={{uri: photo}}/>
-                                            <Button transparent style={{paddingTop: 30}} onPress={() => setShowCamera(true)}>
-                                                <Text>Remake</Text>
-                                            </Button>
-                                        </View>
-                                    )
-                                }
-                            </View>
+                        <View>
+                            {
+                                currentDamage.photos.map((photo, key) =>
+                                    <View key={key} style={styles.photo}>
+                                        <Image style={styles.damagePhoto} source={{uri: photo}}/>
+                                        <Button transparent style={{paddingTop: 30}}
+                                                onPress={() => setShowCamera(true)}>
+                                            <Text>Remake</Text>
+                                        </Button>
+                                    </View>
+                                )
+                            }
+                        </View>
                     }
                     <Button style={styles.margin} block onPress={() => setShowCamera(true)}>
                         <Text>Add Photo</Text>
@@ -158,7 +159,7 @@ export default function AddDamageScreen({navigator, carInfo, startTime, damages 
                 </Form>
             </View>
             }
-            </ScrollView>
+        </View>
     </Layout>
 
 }

@@ -19,8 +19,8 @@ export default function DamageScreen({navigator, carInfo, damages = [], startTim
 
     return <Layout centeredContent={false} footer={footer}>
         <View style={styles.flexRow}>
-            <Text style={[styles.header]}>Add damages</Text>
-            <Button style={styles.iconButton}
+            <Text style={styles.header}>Add damages</Text>
+            <Button style={[styles.iconButton, {marginTop: 20}]}
                     onPress={() => navigator.push('AddDamageScreen', {carInfo, startTime, damages: damagesCopy})}>
                 <Icon name="add"/>
             </Button>

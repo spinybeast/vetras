@@ -1,21 +1,18 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import AppStyles from '../../../Theme/ApplicationStyles';
 const button = {
     marginLeft: 5,
     marginRight: 5,
     marginBottom: 10,
 };
+
 export default StyleSheet.create({
     ...AppStyles,
-    main: {
-        flex: 1,
-        paddingTop: 45,
-    },
     header: {
         fontSize: 20,
         textAlign: 'center',
         marginBottom: 20,
-        paddingTop: 10
+        marginTop: 30
     },
     label: {
         fontSize: 20,
@@ -59,4 +56,5 @@ export default StyleSheet.create({
         ...AppStyles.flexRow,
         marginTop: 10
     }
+
 });

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Body, Button, View, Left, List, ListItem, Spinner, Right, Text, Thumbnail } from 'native-base';
-import { ScrollView } from 'react-native';
 import { fetchOrdersByServices, fetchVehicles } from "../../../Helpers/api";
 import Layout from "../../../Theme/Layout";
 import styles from './OrdersScreenStyle';
@@ -34,7 +33,7 @@ export default function OrdersScreen({navigator, selectedServices, services}) {
     return <Layout>
         {
             loading ? <Spinner/> :
-                <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+                <View>
                     {
                         orders.length === 0 ?
                             <View style={styles.flexRow}><Text>All tasks complete. Good job!</Text></View> :
@@ -67,7 +66,7 @@ export default function OrdersScreen({navigator, selectedServices, services}) {
                             </List>
 
                     }
-                </ScrollView>
+                </View>
         }
     </Layout>
 

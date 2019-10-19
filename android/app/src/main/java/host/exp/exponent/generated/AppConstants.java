@@ -24,10 +24,15 @@ public class AppConstants {
     List<Constants.EmbeddedResponse> embeddedResponses = new ArrayList<>();
 
     
+        
+        
+        
+        
+        
         // ADD EMBEDDED RESPONSES HERE
         // START EMBEDDED RESPONSES
         embeddedResponses.add(new Constants.EmbeddedResponse("https://exp.host/@spiny.beast/vetras", "assets://shell-app-manifest.json", "application/json"));
-        embeddedResponses.add(new Constants.EmbeddedResponse("https://d1wp6m56sqw74a.cloudfront.net/%40spiny.beast%2Fvetras%2F1.0.0%2F7e298bb6a4ef2f80e1440e415ea87b13-35.0.0-android.js", "assets://shell-app.bundle", "application/javascript"));
+        embeddedResponses.add(new Constants.EmbeddedResponse("https://d1wp6m56sqw74a.cloudfront.net/%40spiny.beast%2Fvetras%2F1.0.0%2F08bd8bd1aeeef4b8d71db041fc7967cf-35.0.0-android.js", "assets://shell-app.bundle", "application/javascript"));
         // END EMBEDDED RESPONSES
     EMBEDDED_RESPONSES = embeddedResponses;
   }

@@ -105,7 +105,6 @@ apply from: "../../node_modules/react-native-unimodules/gradle.groovy"
 
 dependencies {
     implementation project(':react-native-vector-icons')
-  implementation project(':react-native-fs')
 
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 

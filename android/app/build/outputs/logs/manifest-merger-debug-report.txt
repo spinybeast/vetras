@@ -7,7 +7,6 @@ INJECTED from /home/spiny/PhpstormProjects/vetras/android/app/src/main/AndroidMa
 MERGED from [host.exp.exponent:expoview:35.0.0] /home/spiny/.gradle/caches/transforms-1/files-1.1/expoview-35.0.0.aar/c49546422bfff4a7817cca3c117dcfdb/AndroidManifest.xml:2:1-112:12
 MERGED from [org.webkit:android-jsc:r245459] /home/spiny/.gradle/caches/transforms-1/files-1.1/android-jsc-r245459.aar/5b7fbe64dd89c4ce3232fa1150b6c425/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-vector-icons] /home/spiny/PhpstormProjects/vetras/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
-MERGED from [:react-native-fs] /home/spiny/PhpstormProjects/vetras/node_modules/react-native-fs/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-13:12
 MERGED from [com.facebook.react:react-native:35.0.0] /home/spiny/.gradle/caches/transforms-1/files-1.1/react-native-35.0.0.aar/866356f4b4a41dae093e33de2587aa50/AndroidManifest.xml:2:1-13:12
 MERGED from [:unimodules-react-native-adapter] /home/spiny/PhpstormProjects/vetras/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:expo-app-loader-provider] /home/spiny/PhpstormProjects/vetras/node_modules/expo-app-loader-provider/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
@@ -407,8 +406,6 @@ uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from /home/spiny/PhpstormProjects/vetras/android/app/src/main/AndroidManifest.xml:48:3-79
 MERGED from [host.exp.exponent:expoview:35.0.0] /home/spiny/.gradle/caches/transforms-1/files-1.1/expoview-35.0.0.aar/c49546422bfff4a7817cca3c117dcfdb/AndroidManifest.xml:38:5-81
 MERGED from [host.exp.exponent:expoview:35.0.0] /home/spiny/.gradle/caches/transforms-1/files-1.1/expoview-35.0.0.aar/c49546422bfff4a7817cca3c117dcfdb/AndroidManifest.xml:38:5-81
-MERGED from [:react-native-fs] /home/spiny/PhpstormProjects/vetras/node_modules/react-native-fs/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-81
-MERGED from [:react-native-fs] /home/spiny/PhpstormProjects/vetras/node_modules/react-native-fs/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-81
 MERGED from [:expo-file-system] /home/spiny/PhpstormProjects/vetras/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-81
 MERGED from [:expo-file-system] /home/spiny/PhpstormProjects/vetras/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-81
 	android:name
@@ -983,8 +980,6 @@ MERGED from [org.webkit:android-jsc:r245459] /home/spiny/.gradle/caches/transfor
 MERGED from [org.webkit:android-jsc:r245459] /home/spiny/.gradle/caches/transforms-1/files-1.1/android-jsc-r245459.aar/5b7fbe64dd89c4ce3232fa1150b6c425/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-vector-icons] /home/spiny/PhpstormProjects/vetras/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-vector-icons] /home/spiny/PhpstormProjects/vetras/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-fs] /home/spiny/PhpstormProjects/vetras/node_modules/react-native-fs/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-fs] /home/spiny/PhpstormProjects/vetras/node_modules/react-native-fs/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:35.0.0] /home/spiny/.gradle/caches/transforms-1/files-1.1/react-native-35.0.0.aar/866356f4b4a41dae093e33de2587aa50/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:35.0.0] /home/spiny/.gradle/caches/transforms-1/files-1.1/react-native-35.0.0.aar/866356f4b4a41dae093e33de2587aa50/AndroidManifest.xml:7:5-9:41
 MERGED from [:unimodules-react-native-adapter] /home/spiny/PhpstormProjects/vetras/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
