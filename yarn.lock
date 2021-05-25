@@ -1399,13 +1399,15 @@ braces@^2.3.1:
     to-regex "^3.0.1"
 
 browserslist@^4.6.0, browserslist@^4.6.6:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.7.0.tgz#9ee89225ffc07db03409f2fee524dc8227458a17"
-  integrity sha512-9rGNDtnj+HaahxiVV38Gn8n8Lr8REKsel68v1sPFfIGEK6uSXTY3h9acgiT1dZVtOOUtifo/Dn8daDQ5dUgVsA==
+  version "4.16.6"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.16.6.tgz#d7901277a5a88e554ed305b183ec9b0c08f66fa2"
+  integrity sha512-Wspk/PqO+4W9qp5iUTJsa1B/QrYn1keNCcEP5OvP7WBwT4KaDly0uONYmC6Xa3Z5IqnUgS0KcgLYu1l74x0ZXQ==
   dependencies:
-    caniuse-lite "^1.0.30000989"
-    electron-to-chromium "^1.3.247"
-    node-releases "^1.1.29"
+    caniuse-lite "^1.0.30001219"
+    colorette "^1.2.2"
+    electron-to-chromium "^1.3.723"
+    escalade "^3.1.1"
+    node-releases "^1.1.71"
 
 bser@^2.0.0:
   version "2.1.0"
@@ -1500,10 +1502,10 @@ camelcase@^5.0.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.3.1.tgz#e3c9b31569e106811df242f715725a1f4c494320"
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
-caniuse-lite@^1.0.30000989:
-  version "1.0.30000999"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000999.tgz#427253a69ad7bea4aa8d8345687b8eec51ca0e43"
-  integrity sha512-1CUyKyecPeksKwXZvYw0tEoaMCo/RwBlXmEtN5vVnabvO0KPd9RQLcaAuR9/1F+KDMv6esmOFWlsXuzDk+8rxg==
+caniuse-lite@^1.0.30001219:
+  version "1.0.30001228"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001228.tgz#bfdc5942cd3326fa51ee0b42fbef4da9d492a7fa"
+  integrity sha512-QQmLOGJ3DEgokHbMSA8cj2a+geXqmnpyOFT0lhQV6P3/YOJvGDEwoedcwxEQ30gJIwIIunHIicunJ2rzK5gB2A==
 
 capture-exit@^1.2.0:
   version "1.2.0"
@@ -1534,7 +1536,7 @@ chalk@^1.1.1:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chalk@^2.0.0, chalk@^2.4.1:
+chalk@^2.0.0, chalk@^2.4.1, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -1648,6 +1650,11 @@ color@~3.1.2:
   dependencies:
     color-convert "^1.9.1"
     color-string "^1.5.2"
+
+colorette@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/colorette/-/colorette-1.2.2.tgz#cbcc79d5e99caea2dbf10eb3a26fd8b3e6acfa94"
+  integrity sha512-MKGMzyfeuutC/ZJ1cba9NqcNpfeqMUcYmyF1ZFY6/Cn7CNSAKx6a+s48sqLqyAiZuaP2TcqMhoo+dlwFnVxT9w==
 
 commander@^2.19.0, commander@^2.9.0:
   version "2.20.1"
@@ -1939,10 +1946,10 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-electron-to-chromium@^1.3.247:
-  version "1.3.279"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.279.tgz#543d578f118afbb750ff1e8f3e0c898c30a4f574"
-  integrity sha512-iiBT/LeUWKnhd7d/n4IZsx/NIacs7gjFgAT1q5/i0POiS+5d0rVnbbyCRMmsBW7vaQJOUhWyh4PsyIVZb/Ax5Q==
+electron-to-chromium@^1.3.723:
+  version "1.3.738"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.738.tgz#aec24b091c82acbfabbdcce08076a703941d17ca"
+  integrity sha512-vCMf4gDOpEylPSLPLSwAEsz+R3ShP02Y3cAKMZvTqule3XcPp7tgc/0ESI7IS6ZeyBlGClE50N53fIOkcIVnpw==
 
 emitter-component@^1.1.1:
   version "1.1.1"
@@ -1992,6 +1999,11 @@ errorhandler@^1.5.0:
   dependencies:
     accepts "~1.3.7"
     escape-html "~1.0.3"
+
+escalade@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
+  integrity sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -2236,6 +2248,13 @@ expo@^35.0.0:
     unimodules-sensors-interface "~4.0.0"
     unimodules-task-manager-interface "~4.0.0"
     uuid-js "^0.7.5"
+
+expokit@^35.0.2:
+  version "35.0.4"
+  resolved "https://registry.yarnpkg.com/expokit/-/expokit-35.0.4.tgz#813e38c2fa56ff95c7f76648f0e9cb54ef1c0a48"
+  integrity sha512-K/uEFBhyo2cmRDpvRKYcBTRpXHTNdtPkGRjs2gLcH/LDwAhwLVBCiC9XOXeCpuhmKtYVg7HIzkIRd0DAsFIYhA==
+  dependencies:
+    jsc-android "^245459.0.0"
 
 extend-shallow@^1.1.2:
   version "1.1.4"
@@ -3081,6 +3100,11 @@ js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
+jsc-android@^245459.0.0:
+  version "245459.0.0"
+  resolved "https://registry.yarnpkg.com/jsc-android/-/jsc-android-245459.0.0.tgz#e584258dd0b04c9159a27fb104cd5d491fd202c9"
+  integrity sha512-wkjURqwaB1daNkDi2OYYbsLnIdC/lUM2nPXQKRs5pqEU9chDg435bjvo+LSaHotDENygHQDHe+ntUkkw2gwMtg==
+
 jsesc@^2.5.1:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"
@@ -3914,12 +3938,10 @@ node-pre-gyp@^0.12.0:
     semver "^5.3.0"
     tar "^4"
 
-node-releases@^1.1.29:
-  version "1.1.35"
-  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.35.tgz#32a74a3cd497aa77f23d509f483475fd160e4c48"
-  integrity sha512-JGcM/wndCN/2elJlU0IGdVEJQQnJwsLbgPCFd2pY7V0mxf17bZ0Gb/lgOtL29ZQhvEX5shnVhxQyZz3ex94N8w==
-  dependencies:
-    semver "^6.3.0"
+node-releases@^1.1.71:
+  version "1.1.72"
+  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.72.tgz#14802ab6b1039a79a0c7d662b610a5bbd76eacbe"
+  integrity sha512-LLUo+PpH3dU6XizX3iVoubUNheF/owjXCZZ5yACDxNnPtgFuludV1ZL3ayK1kVep42Rmm0+R9/Y60NQbZ2bifw==
 
 noop-fn@^1.0.0:
   version "1.0.0"
@@ -4365,7 +4387,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4548,10 +4570,12 @@ react-native-openalpr@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-openalpr/-/react-native-openalpr-2.0.1.tgz#d9d21d987eed21c4a43622d0e12b3032a8c6fa4c"
   integrity sha512-vX5f/90eWr6fcMyPbSQ7frXFTD5mX9RyUmPClP3K1nPhq9heA6A08N+p2hCfCaa9EiruwlAjm1mZBq2vrOgAGQ==
 
-react-native-sectioned-multi-select@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/react-native-sectioned-multi-select/-/react-native-sectioned-multi-select-0.7.2.tgz#f0e416b98d00c7af69aedca41f6a6c06800f51b6"
-  integrity sha512-7l2QUI/HVxfaBddP7VCX7cMLZV+4Wf2F4Gytar279vLEiMBBeyQsN8f/FaUXBR0qK3aQRqr3KFjAG1l/jLJIMw==
+react-native-select-multiple@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-select-multiple/-/react-native-select-multiple-2.1.0.tgz#1cc9b3c2a694d85ab5861d035f2252c20b943a08"
+  integrity sha512-sJepp/RNeLorR+/bEUVuWnVEX5klpyf0MHWKy0SN1MIty4vcKhL9ZhPM6Zydm5p6qHeFcvA7Q87FzO1JTdaqkw==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-native-slider@^0.11.0:
   version "0.11.0"
@@ -4559,6 +4583,30 @@ react-native-slider@^0.11.0:
   integrity sha512-jV9K87eu9uWr0uJIyrSpBLnCKvVlOySC2wynq9TFCdV9oGgjt7Niq8Q1A8R8v+5GHsuBw/s8vEj1AAkkUi+u+w==
   dependencies:
     prop-types "^15.5.6"
+
+react-native-unimodules@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-unimodules/-/react-native-unimodules-0.6.0.tgz#f62c753705f4b97ba19e2834d8ad3357e204537c"
+  integrity sha512-b563vqelTLtagFLWiI428rUTx4BxWpytlsEC1xcAQdf8chtnVr7QrkRXatiIvJmDAYLL8l+8UxdBW9e0f2rZ9Q==
+  dependencies:
+    "@unimodules/core" "~4.0.0"
+    "@unimodules/react-native-adapter" "~4.0.0"
+    chalk "^2.4.2"
+    expo-app-loader-provider "~7.0.0"
+    expo-asset "~7.0.0"
+    expo-constants "~7.0.0"
+    expo-file-system "~7.0.0"
+    expo-permissions "~7.0.0"
+    unimodules-barcode-scanner-interface "~4.0.0"
+    unimodules-camera-interface "~4.0.0"
+    unimodules-constants-interface "~4.0.0"
+    unimodules-face-detector-interface "~4.0.0"
+    unimodules-file-system-interface "~4.0.0"
+    unimodules-font-interface "~4.0.0"
+    unimodules-image-loader-interface "~4.0.0"
+    unimodules-permissions-interface "~4.0.0"
+    unimodules-sensors-interface "~4.0.0"
+    unimodules-task-manager-interface "~4.0.0"
 
 react-native-vector-icons@^6.6.0:
   version "6.6.0"
